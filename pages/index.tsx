@@ -22,13 +22,13 @@ const Home: NextPage<Props> = ({posts}:Props) => {
           블로그 <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} />
+        <Image src={'/pikaa.webp'} alt="" width={400} height={400} />
         {posts.map(({ slug, frontmatter }) => (
         <div
           key={slug}
           className=""
         >
-          <Link href={`/${slug}`} as={process.env.BACKEND_URL + `/${slug}`}>
+          <Link href={`/${slug}`}>
             <a>
               <h1>{frontmatter.title}</h1>
             </a>
