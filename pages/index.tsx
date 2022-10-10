@@ -14,7 +14,7 @@ const Home: NextPage<Props> = ({posts}:Props) => {
     <div>
       <Header>Blog.</Header>
     <Box>
-        <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} />
+        {/* <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} /> */}
         {posts.map(({ slug, frontmatter }) => (
         <div
           key={slug}
