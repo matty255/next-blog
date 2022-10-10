@@ -10,4 +10,7 @@ const name = 'https://github.com/matty255/next-blog'
 module.exports = {
   assetPrefix: !debug ? `/${name}/` : '',
   nextConfig,
+  images: {
+    unoptimized: true,
+  },
 }
