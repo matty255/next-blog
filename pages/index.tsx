@@ -8,7 +8,8 @@ import {Props, Posts} from "../types/types"
 import fs from "fs";
 import matter from "gray-matter"
 
-const Home: NextPage = ({posts}:Props) => {
+const Home: NextPage<Props> = ({posts}:Props) => {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,16 +22,15 @@ const Home: NextPage = ({posts}:Props) => {
           블로그 <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-  
+        <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} />
         {posts.map(({ slug, frontmatter }) => (
         <div
           key={slug}
-          className="border border-gray-200 m-2 rounded-xl shadow-lg overflow-hidden flex flex-col"
+          className=""
         >
-          <Link href={`/${slug}`}>
+          <Link href={`/${slug}`} as={process.env.BACKEND_URL + `/${slug}`}>
             <a>
-             
-              <h1 className="p-4 text-lg font-bold">{frontmatter.title}</h1>
+              <h1>{frontmatter.title}</h1>
             </a>
           </Link>
         </div>

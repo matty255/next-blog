@@ -1,9 +1,9 @@
 ---
-title: dsfsl
+title: 한글로 블로그
 image: /images/backgrounds/bg7.jpg
 description: Coding is such a blissful activity.
-date: '2020-04-19'
-featured: 1
+date: '2022-10-10'
+featured: 2
 ---
 
 Some introductory text.

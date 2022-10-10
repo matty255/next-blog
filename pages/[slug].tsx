@@ -29,8 +29,11 @@ export async function getStaticProps({ params: { slug } }: ctx) {
 
 export default function PostPage({ frontmatter, content }: Detail) {
   return (
-    <div className='prose mx-auto'>
+    <div>
       <h1>{frontmatter.title}</h1>
+      <h1>{frontmatter.description}</h1>
+      <h1>{frontmatter.date}</h1>
+      <h1>{frontmatter.featured}</h1>
       <div dangerouslySetInnerHTML={{ __html: md().render(content) }} />
     </div>
   );
