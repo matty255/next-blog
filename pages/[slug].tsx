@@ -2,6 +2,10 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 import {Detail, ctx} from "../types/types"
+import useSWR, {SWRConfig} from 'swr';
+import { useRouter } from 'next/router';
+import type { NextApiRequest, NextApiResponse } from 'next'
+import fetcher from './api/[slug]';
 
 export async function getStaticPaths() {
   const files = fs.readdirSync('__posts');
@@ -17,24 +21,36 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }: ctx) {
+  // const article = await getPostFromAPI()
   const fileName = fs.readFileSync(`__posts/${slug}.md`, 'utf-8');
   const { data: frontmatter, content } = matter(fileName);
+
   return {
     props: {
-      frontmatter,
-      content,
-    },
+      fallback: {
+        [slug] : 
+        {frontmatter, content}
+      },
+    }
   };
 }
 
-export default function PostPage({ frontmatter, content }: Detail) {
+export default function PostPage({ fallback }:Detail) {
+  const router = useRouter();
+  const title = router.query.slug as string;
+  const { data, error } = useSWR(`api/${title}`, fetcher)
+
   return (
-    <div>
-      <h1>{frontmatter.title}</h1>
-      <h1>{frontmatter.description}</h1>
-      <h1>{frontmatter.date}</h1>
-      <h1>{frontmatter.featured}</h1>
-      <div dangerouslySetInnerHTML={{ __html: md().render(content) }} />
-    </div>
+    <SWRConfig value={{ fallback }}>
+      {fallback !== undefined && 
+       <div>
+       <h1>{fallback[title].frontmatter.title}</h1>
+       <h1>{fallback[title].frontmatter.description}</h1>
+       <h1>{fallback[title].frontmatter.date}</h1>
+       <h1>{fallback[title].frontmatter.featured}</h1>
+       <div dangerouslySetInnerHTML={{ __html: md().render(fallback[title].content) }} />
+       </div>
+      }
+    </SWRConfig>
   );
 }
