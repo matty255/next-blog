@@ -5,8 +5,17 @@ interface Posts {
     };
   }
 
-  interface Detail extends Posts {
-    content:string;
+  interface Detail {
+    fallback : {
+      [slug: string] : {
+        slug: string;
+        frontmatter: {
+          [key: string]: string;
+        };
+        content:string;
+      }
+    }
+  
   }
 
 interface Props{
