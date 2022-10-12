@@ -9,7 +9,9 @@ export default function Handler(
   res: NextApiResponse
 ) {
 
-  const filePath = path.join('./__post', `${title}.md`);
-  const fileData = fs.readFileSync(filePath);
+  const filePath = path.join('./__post', `/${title}.md`);
+  const fileData = fs.readFileSync(filePath, 'utf-8');
   const data = JSON.stringify(fileData);
-  return res.status(200).json({ message: "Success!", feedback: data })}
+  const a = JSON.parse(data);
+  // console.log(a)
+  return res.status(200).json({ message: "Success!", data: a })}

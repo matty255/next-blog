@@ -4,8 +4,14 @@ import md from 'markdown-it';
 import {Detail, ctx} from "../types/types"
 import useSWR, {SWRConfig} from 'swr';
 import { useRouter } from 'next/router';
-import type { NextApiRequest, NextApiResponse } from 'next'
-import fetcher from './api/[slug]';
+import axios from 'axios';
+import {unified} from "unified";
+import markdown from "remark-parse";
+import remark2rehype from "remark-rehype";
+import html from "rehype-stringify";
+import parse from 'html-react-parser';
+
+const fetcher = (url:string) => axios.get(url).then(res => res.data)
 
 export async function getStaticPaths() {
   const files = fs.readdirSync('__posts');
@@ -38,19 +44,21 @@ export async function getStaticProps({ params: { slug } }: ctx) {
 export default function PostPage({ fallback }:Detail) {
   const router = useRouter();
   const title = router.query.slug as string;
-  const { data, error } = useSWR(`api/${title}`, fetcher)
+  const { data, error } = useSWR(title, fetcher)
+  const a = data || ""
 
   return (
-    <SWRConfig value={{ fallback }}>
-      {fallback !== undefined && 
+    <SWRConfig value={{ fallback, refreshInterval: 3000 }}>
+      {fallback !== undefined ? 
        <div>
        <h1>{fallback[title].frontmatter.title}</h1>
        <h1>{fallback[title].frontmatter.description}</h1>
        <h1>{fallback[title].frontmatter.date}</h1>
        <h1>{fallback[title].frontmatter.featured}</h1>
        <div dangerouslySetInnerHTML={{ __html: md().render(fallback[title].content) }} />
-       </div>
+       </div> : <>{parse(a)}</>
       }
+     
     </SWRConfig>
   );
 }
