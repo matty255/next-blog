@@ -1,14 +1,13 @@
 import {Detail, ctx} from "../types/types"
 import { getPostBySlug, getAllPosts } from '../lib/api'
 import {PostType} from "../types/types"
-import markdownStyles from '../styles/markdown-styles.module.css'
 import { fetcher } from '../lib/fetcher';
 import useSWR, { SWRConfig } from 'swr';
 import { useRouter } from 'next/router'
 import axios, { AxiosError } from 'axios';
-
-const basePath = process.env.BACKEND_URL
-
+import PostHeader from "../components/PostHeader";
+import PostBody from "../components/PostBody";
+import Layout from '../components/Layout';
 
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
@@ -45,6 +44,7 @@ export default function Post({ post }: PostType) {
   // console.log(data)
 
   return (
+    <Layout>
     <SWRConfig
     value={{
       fetcher,
@@ -53,14 +53,12 @@ export default function Post({ post }: PostType) {
   >
     {data?.post !== undefined && 
     <div>
-    <p>{data.post.title}</p>
-    <div
-    className={markdownStyles['markdown']}
-    dangerouslySetInnerHTML={{ __html: data.post.content }}
-  />
+    <PostHeader title={data.post.title} date={data.post.date} />
+    <PostBody content={data.post.content} />
   </div>
    }   
     </SWRConfig>
+    </Layout>
   )
 }
 

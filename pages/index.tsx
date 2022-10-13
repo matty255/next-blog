@@ -6,13 +6,15 @@ import styled from "styled-components";
 import useSWR, { SWRConfig } from 'swr';
 import axios from 'axios';
 import { fetcher } from '../lib/fetcher';
+import Layout from '../components/Layout';
+import PostCard from '../components/PostCard';
 
-const basePath = process.env.BACKEND_URL
 
 const Home: NextPage<Props> = ({ allPosts }:Props) => {
   
   const { data, error } = useSWR(`/api/post`, fetcher, {fallbackData: allPosts});
   return (
+    <Layout>
     <SWRConfig
     value={{
       fetcher,
@@ -22,20 +24,17 @@ const Home: NextPage<Props> = ({ allPosts }:Props) => {
       <Header>Blog.</Header>
     <Box>
         {/* <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} /> */}
-        {data?.allPosts !== undefined ? data.allPosts.map(({ slug, title }:Posts) => (
+        {data?.allPosts !== undefined ? data.allPosts.map((post:Posts) => (
         <div
-          key={slug}
+          key={post.slug}
           className=""
         >
-          <Link href={`/${slug}`} key={title}>
-            <a>
-              <h2 className='title'>{title}</h2>
-            </a>
-          </Link>
+          <PostCard {...post} />
         </div>
       )) : <><div>데이터</div></>}
 </Box>
 </SWRConfig>
+</Layout>
   )
 }
 
