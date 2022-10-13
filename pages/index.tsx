@@ -11,7 +11,7 @@ const basePath = process.env.BACKEND_URL
 
 const Home: NextPage<Props> = ({ allPosts }:Props) => {
   
-  const { data, error } = useSWR(`${basePath}/api/post`, fetcher, {fallbackData: allPosts});
+  const { data, error } = useSWR(`/api/post`, fetcher, {fallbackData: allPosts});
   return (
     <SWRConfig
     value={{
