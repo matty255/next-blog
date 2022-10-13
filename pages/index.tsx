@@ -1,24 +1,27 @@
 import type { NextPage } from 'next'
 import Link from "next/link";
 import React from "react";
-import {Props, Posts} from "../types/types"
+import {Props, Posts } from "../types/types"
 import styled from "styled-components";
-import { getAllPosts } from '../lib/api'
-import useSWR, {SWRConfig} from 'swr';
+import useSWR, { SWRConfig } from 'swr';
 import axios from 'axios';
-
-const fetcher = (url:string) => axios.get(url).then(res => res.data)
+import { fetcher } from '../lib/fetcher';
 
 const Home: NextPage<Props> = ({ allPosts }:Props) => {
-  // console.log(allPosts)
-  const { data, error } = useSWR('/', fetcher)
+
+  const { data, error } = useSWR("/api/post", fetcher, {fallbackData: allPosts});
 
   return (
-    <div>
+    <SWRConfig
+    value={{
+      fetcher,
+      dedupingInterval: 10000,
+    }}
+  >
       <Header>Blog.</Header>
     <Box>
         {/* <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} /> */}
-        {allPosts?.map(({ slug, title }) => (
+        {data?.allPosts !== undefined ? data.allPosts.map(({ slug, title }:Posts) => (
         <div
           key={slug}
           className=""
@@ -29,29 +32,43 @@ const Home: NextPage<Props> = ({ allPosts }:Props) => {
             </a>
           </Link>
         </div>
-      ))}
+      )) : <><div>데이터</div></>}
 </Box>
-    </div>
+</SWRConfig>
   )
 }
 
 export default Home
 
-export async function getStaticProps() {
-
-  const allPosts = getAllPosts([
-    'slug',
-    'title',
-    'image',
-    'description',
-    'date',
-    'featured'
-  ])
-
-  return {
-    props: { allPosts },
+export const getStaticProps = async () => {
+  try {
+    const res = await axios.get("/api/post");
+    return {
+      props: {
+        allPosts:  res.data ,
+      },
+    };
+  } catch (error) {
+    return {props: {props:"error"}}
   }
-}
+};
+
+
+// export async function getStaticProps() {
+
+//   const allPosts = getAllPosts([
+//     'slug',
+//     'title',
+//     'image',
+//     'description',
+//     'date',
+//     'featured'
+//   ])
+
+//   return {
+//     props: { allPosts },
+//   }
+// }
 
 const Box = styled.div`
 max-width: 768px;

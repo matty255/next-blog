@@ -1,11 +1,18 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
-import {Posts} from "../../types/types"
-import axios from 'axios';
+import { NextApiResponse, NextApiRequest } from 'next'
+import {Props, Posts} from "../../types/types"
+import { getAllPosts } from '../../lib/api'
 
 export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<object>
+  _req: NextApiRequest,
+  res: NextApiResponse<Props>
 ) {
-  res.status(200).json({post: res})
+    const allPosts = getAllPosts([
+    'slug',
+    'title',
+    'image',
+    'description',
+    'date',
+    'featured'
+  ])
+  return res.status(200).json({allPosts})
 }
