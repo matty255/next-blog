@@ -43,10 +43,10 @@ export default Home
 
 export const getStaticProps = async () => {
   try {
-    const res = await axios.get(`${basePath}/api/post`);
+    const res = await axios.get(`/api/post`);
     return {
       props: {
-        allPosts:  res.data ,
+        allPosts:  res.data,
       },
     };
   } catch (error) {
