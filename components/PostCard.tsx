@@ -27,9 +27,9 @@ const PostCard = (post :Posts) => {
 export default PostCard;
 
 const CardBox = styled.div`
-    width: 100vw;
-    min-width: 20rem;
-    max-width: 25rem;
+    width: 100%;
+    min-width: 50rem;
+    max-width: 90%;
     background-color: #f0f0f0;
     padding: 1rem;
     display: flex;
@@ -40,5 +40,8 @@ const CardBox = styled.div`
         }
     &:active {
     scale: 110%;
+    }
+    img {
+        flex-shrink: 0;
     }
 `

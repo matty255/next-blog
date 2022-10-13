@@ -50,7 +50,7 @@ export const GlobalStyle = createGlobalStyle`
         }
     }
 
-    .pc-tablet-only {
+    /* .pc-tablet-only {
         display: block;
         ${media.mobile} {
             display: none;
@@ -67,5 +67,5 @@ export const GlobalStyle = createGlobalStyle`
         ${media.mobile} {
             display: block;
         }
-    }
+    } */
 `;

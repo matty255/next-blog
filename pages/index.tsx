@@ -23,7 +23,6 @@ const Home: NextPage<Props> = ({ allPosts }:Props) => {
   >
       <Header>Blog.</Header>
     <Box>
-        {/* <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} /> */}
         {data?.allPosts !== undefined ? data.allPosts.map((post:Posts) => (
         <div
           key={post.slug}
@@ -71,7 +70,7 @@ export const getStaticProps = async () => {
 // }
 
 const Box = styled.div`
-max-width: 768px;
+width: 100%;
 display: flex;
 flex-direction: column;
 justify-content: center;
