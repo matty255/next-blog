@@ -1,4 +1,5 @@
 ---
+slug: 'la'
 title: 한글로 블로그
 image: /images/backgrounds/bg7.jpg
 description: Coding is such a blissful activity.

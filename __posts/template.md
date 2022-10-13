@@ -1,4 +1,5 @@
 ---
+slug: 'template'
 title: Blog Template
 image: /images/backgrounds/bg7.jpg
 description: Coding is such a blissful activity.

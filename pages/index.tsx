@@ -1,28 +1,31 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
 import Link from "next/link";
 import React from "react";
 import {Props, Posts} from "../types/types"
-import fs from "fs";
-import matter from "gray-matter"
 import styled from "styled-components";
+import { getAllPosts } from '../lib/api'
+import useSWR, {SWRConfig} from 'swr';
+import axios from 'axios';
 
-const Home: NextPage<Props> = ({posts}:Props) => {
+const fetcher = (url:string) => axios.get(url).then(res => res.data)
+
+const Home: NextPage<Props> = ({ allPosts }:Props) => {
+  // console.log(allPosts)
+  const { data, error } = useSWR('/', fetcher)
 
   return (
     <div>
       <Header>Blog.</Header>
     <Box>
         {/* <Image src={process.env.BACKEND_URL + '/pikaa.webp'} alt="" width={400} height={400} /> */}
-        {posts.map(({ slug, frontmatter }) => (
+        {allPosts?.map(({ slug, title }) => (
         <div
           key={slug}
           className=""
         >
-          <Link href={`/${slug}`}>
+          <Link href={`/${slug}`} key={title}>
             <a>
-              <h2 className='title'>{frontmatter.title}</h2>
+              <h2 className='title'>{title}</h2>
             </a>
           </Link>
         </div>
@@ -34,30 +37,20 @@ const Home: NextPage<Props> = ({posts}:Props) => {
 
 export default Home
 
-
-
-
-
 export async function getStaticProps() {
 
-  const files = fs.readdirSync('__posts');
-
-  const posts: Posts[] = files.map((fileName) => {
-    const slug = fileName.replace('.md', '');
-    const readFile = fs.readFileSync(`__posts/${fileName}`, 'utf-8');
-    const { data: frontmatter } = matter(readFile);
-
-    return {
-      slug,
-      frontmatter,
-    };
-  });
+  const allPosts = getAllPosts([
+    'slug',
+    'title',
+    'image',
+    'description',
+    'date',
+    'featured'
+  ])
 
   return {
-    props: {
-      posts,
-    },
-  };
+    props: { allPosts },
+  }
 }
 
 const Box = styled.div`

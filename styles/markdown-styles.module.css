@@ -1,0 +1,11 @@
+.markdown {
+    font-size: 2rem;
+  }
+  
+  .markdown p,
+  .markdown ul,
+  .markdown ol,
+  .markdown blockquote {
+    margin-left: 10px;
+  }
+  

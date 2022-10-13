@@ -1,8 +1,11 @@
+interface PostType {
+  post : {
+    [key: string]: string;
+  }
+}
+
 interface Posts {
-    slug: string;
-    frontmatter: {
       [key: string]: string;
-    };
   }
 
   interface Detail {
@@ -19,26 +22,15 @@ interface Posts {
   }
 
 interface Props{
-posts: Posts[];
+  allPosts: Posts[];
 }
 
 interface ctx {
     params: {id:string, slug:string}
 }
 
-interface post {
-    frontmatter : {
-        date:string,
-        description:string,
-        featured:number,
-        image:string,
-        title:string
-    }, slug:string, content?:object[];
-}
 
-interface postList {
-    posts:[]
-  }
 declare module 'markdown-it'
-
-export {Props, Posts, ctx, post, postList, Detail}
+declare module 'remark'
+declare module 'remark-html'
+export {Props, Posts, ctx, PostType, Detail}

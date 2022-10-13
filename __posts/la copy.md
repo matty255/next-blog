@@ -1,4 +1,5 @@
 ---
+slug: 'la copy'
 title: 저장
 image: /images/backgrounds/bg7.jpg
 description: Coding is such a blissful activity.
