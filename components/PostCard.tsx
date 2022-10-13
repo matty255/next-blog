@@ -27,6 +27,7 @@ const PostCard = (post :Posts) => {
 export default PostCard;
 
 const CardBox = styled.div`
+    font-family: Consolas, NanumGothic, Monaco, Andale Mono, monospace;
     width: 100%;
     min-width: 50rem;
     max-width: 90%;

@@ -11,32 +11,28 @@ type Props = {
 
 
 const PostBody = ({ content }:Props) => {
-
+    console.log(content)
     React.useEffect(() => {
         hljs.highlightAll();
     }, []);
     hljs.registerLanguage('javascript', javascript);
 
     return (<>
-
-    <CardBox>
-    <div
+    <CardBox
     className={markdownStyles['markdown']}
     dangerouslySetInnerHTML={{ __html: content }}
   />
-    </CardBox>
-
     </>)
 }
 
 export default PostBody;
 
 const CardBox = styled.div`
-    width: 90vw;
+    max-width: 100%;
     margin:auto;
     background-color: #fffcfc;
-    padding: 1rem;
+    padding: 0.7rem;
     display: flex;
-    justify-content: space-between;
-
+    flex-direction: column;
+    word-break: break-word;
 `

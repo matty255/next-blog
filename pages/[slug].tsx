@@ -8,6 +8,7 @@ import axios, { AxiosError } from 'axios';
 import PostHeader from "../components/PostHeader";
 import PostBody from "../components/PostBody";
 import Layout from '../components/Layout';
+import styled from "styled-components";
 
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
@@ -52,16 +53,20 @@ export default function Post({ post }: PostType) {
     }}
   >
     {data?.post !== undefined && 
-    <div>
+    <Box>
     <PostHeader title={data.post.title} date={data.post.date} />
     <PostBody content={data.post.content} />
-  </div>
+  </Box>
    }   
     </SWRConfig>
     </Layout>
   )
 }
 
+const Box = styled.div`
+  display: flex;
+  flex-direction: column;
+`
 
 // export async function getStaticProps({ params: { slug } }: ctx) {
 //   const post = getPostBySlug(slug, [

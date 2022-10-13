@@ -27,6 +27,7 @@ const PostHeader = ({ title, date }:Props) => {
 export default PostHeader;
 
 const CardBox = styled.div`
+    font-family: Consolas, NanumGothic, Monaco, Andale Mono, monospace;
     width: 90vw;
     margin:auto;
     background-color: #f0f0f0;
