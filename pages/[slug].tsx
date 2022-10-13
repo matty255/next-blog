@@ -7,6 +7,9 @@ import useSWR, { SWRConfig } from 'swr';
 import { useRouter } from 'next/router'
 import axios, { AxiosError } from 'axios';
 
+const basePath = process.env.BACKEND_URL
+
+
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
 
@@ -25,7 +28,7 @@ export async function getStaticPaths() {
 
 export const getStaticProps = async ({ params: { slug } }: ctx) => {
   try {
-    const res = await axios.get(`/api/${slug}`);
+    const res = await axios.get(`${basePath}/api/${slug}`);
     return {
       props: {
         post:  res.data,
@@ -38,7 +41,7 @@ export const getStaticProps = async ({ params: { slug } }: ctx) => {
 
 export default function Post({ post }: PostType) {
   const { query } = useRouter()
-  const { data, error } = useSWR(() => query.slug && `/api/${query.slug}`, fetcher, {fallbackData: post});
+  const { data, error } = useSWR(() => query.slug && `${basePath}/api/${query.slug}`, fetcher, {fallbackData: post});
   // console.log(data)
 
   return (

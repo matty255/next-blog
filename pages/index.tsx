@@ -7,10 +7,11 @@ import useSWR, { SWRConfig } from 'swr';
 import axios from 'axios';
 import { fetcher } from '../lib/fetcher';
 
+const basePath = process.env.BACKEND_URL
+
 const Home: NextPage<Props> = ({ allPosts }:Props) => {
-
-  const { data, error } = useSWR("/api/post", fetcher, {fallbackData: allPosts});
-
+  
+  const { data, error } = useSWR(`${basePath}/api/post`, fetcher, {fallbackData: allPosts});
   return (
     <SWRConfig
     value={{
@@ -42,7 +43,7 @@ export default Home
 
 export const getStaticProps = async () => {
   try {
-    const res = await axios.get("/api/post");
+    const res = await axios.get(`${basePath}/api/post`);
     return {
       props: {
         allPosts:  res.data ,
