@@ -8,7 +8,7 @@ const debug = process.env.NODE_ENV !== 'production'
 const name = 'https://matty255.github.io/next-blog'
 
 module.exports = {
-  assetPrefix: !debug ? `/${name}/` : '',
+  // assetPrefix: !debug ? `/${name}/` : '',
   nextConfig,
   // trailingSlash: true,
   images: {
