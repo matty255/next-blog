@@ -21,8 +21,8 @@ const Home: NextPage<Props> = ({ allPosts }:Props) => {
       dedupingInterval: 10000,
     }}
   >
-      <Header>Blog.</Header>
     <Box>
+        <header><h1>Posts</h1></header>
         {data?.allPosts !== undefined ? data.allPosts.map((post:Posts) => (
         <div
           key={post.slug}
@@ -30,7 +30,7 @@ const Home: NextPage<Props> = ({ allPosts }:Props) => {
         >
           <PostCard {...post} />
         </div>
-      )) : <><div>데이터</div></>}
+      )) : <><div>로딩중입니다...</div></>}
 </Box>
 </SWRConfig>
 </Layout>
@@ -70,7 +70,6 @@ export const getStaticProps = async () => {
 // }
 
 const Box = styled.div`
-width: 100%;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -79,9 +78,3 @@ margin: auto;
 gap: 3rem;
 `
 
-const Header = styled.header`
-background-color: aliceblue;
-font-size: 5rem;
-margin-bottom: 2rem;
-padding: 2rem;
-`

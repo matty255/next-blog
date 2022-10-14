@@ -1,7 +1,7 @@
 ---
-slug: 'la copy'
-title: 저장
-image: /images/backgrounds/bg7.jpg
+slug: la copy
+title: 이미지를 적용하는 방법 이미지를 적용하는 방법이미지를 적용하는 방법이미지를 적용하는 방법
+image: /pic1.webp
 description: Coding is such a blissful activity.
 date: '2022-10-10'
 featured: 3

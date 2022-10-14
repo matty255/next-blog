@@ -11,7 +11,7 @@ type Props = {
 
 
 const PostBody = ({ content }:Props) => {
-    console.log(content)
+    // console.log(content)
     React.useEffect(() => {
         hljs.highlightAll();
     }, []);
@@ -28,10 +28,12 @@ const PostBody = ({ content }:Props) => {
 export default PostBody;
 
 const CardBox = styled.div`
-    max-width: 100%;
+    min-width: 90%;
+    width: 95vw;
+    max-width: 60rem;
     margin:auto;
-    background-color: #fffcfc;
-    padding: 0.7rem;
+    background-color: #e7e7e7;
+    padding: 0.97rem;
     display: flex;
     flex-direction: column;
     word-break: break-word;

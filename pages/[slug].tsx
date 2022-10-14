@@ -5,10 +5,10 @@ import { fetcher } from '../lib/fetcher';
 import useSWR, { SWRConfig } from 'swr';
 import { useRouter } from 'next/router'
 import axios, { AxiosError } from 'axios';
-import PostHeader from "../components/PostHeader";
 import PostBody from "../components/PostBody";
 import Layout from '../components/Layout';
 import styled from "styled-components";
+import PostHeaders from '../components/PostHeaders';
 
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
@@ -54,7 +54,7 @@ export default function Post({ post }: PostType) {
   >
     {data?.post !== undefined && 
     <Box>
-    <PostHeader title={data.post.title} date={data.post.date} />
+      <PostHeaders slug={query.slug || data.post.slug} featured={data.post.featured} />
     <PostBody content={data.post.content} />
   </Box>
    }   
@@ -66,6 +66,8 @@ export default function Post({ post }: PostType) {
 const Box = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 60rem;
+  margin:auto;
 `
 
 // export async function getStaticProps({ params: { slug } }: ctx) {

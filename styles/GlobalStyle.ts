@@ -1,10 +1,14 @@
 import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
-import { media } from "./theme";
+import { device } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
     /* ${reset} */
-
+    body {
+        box-sizing: border-box;
+        width: 100%;
+        margin:0;
+    }
     :focus {
         outline: none;
         border: none;
@@ -18,24 +22,12 @@ export const GlobalStyle = createGlobalStyle`
     h2 {
         font-size: 3rem;
     } */
-    title {
-        font-size: 3rem;
-        color: gray;
-        text-decoration: none;
-        background-color: bisque;
-        padding: 1rem;
-        border-radius: 0.2em;
-        &:hover {
-            color: yellow;
-        }
-    }
+
     html{
         -webkit-text-size-adjust: none;
         font-family: -apple-system,BlinkMacSystemFont,helvetica,Apple SD Gothic Neo,sans-serif;       
         font-display: fallback;
-        /* ${media.tablet}{
-            font-size: 10px;
-        } */
+
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
@@ -49,23 +41,12 @@ export const GlobalStyle = createGlobalStyle`
             fill: #f2f3f4;
         }
     }
-
-    /* .pc-tablet-only {
+    .pc-tablet-only {
+        display:none;
+        @media ${device.tablet} { 
         display: block;
-        ${media.mobile} {
-            display: none;
-        }
     }
-    .tablet-mobile-only{
-        display: none;
-        ${media.tablet}{
-            display:block;
-        }
-    }
-    .mobile-only {
-        display: none;
-        ${media.mobile} {
-            display: block;
-        }
-    } */
+    } 
+
+    
 `;

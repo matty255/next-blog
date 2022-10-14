@@ -1,7 +1,7 @@
 ---
 slug: 'SWR_blog'
 title: stale-while-revalidate 공부하기
-image: https://pbs.twimg.com/profile_images/1147451112082907136/vFrE8I5p_400x400.png
+image: https://3.bp.blogspot.com/-NNzcDmnNWAg/WtMKIzocHsI/AAAAAAAADcM/rtLlxb9IJ2oxJe-FKS_WCyeEkgL52FRowCLcBGAs/s1600/1.gif
 description: swr을 공부하고 최적화기법 적용후 블로깅하기.
 date: '2022-10-13'
 featured: 4
