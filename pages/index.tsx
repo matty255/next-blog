@@ -13,6 +13,7 @@ import PostCard from '../components/PostCard';
 const Home: NextPage<Props> = ({ allPosts }:Props) => {
   
   const { data, error } = useSWR(`/api/post`, fetcher, {fallbackData: allPosts});
+
   return (
     <Layout>
     <SWRConfig

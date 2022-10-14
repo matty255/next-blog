@@ -10,6 +10,7 @@ import Layout from '../components/Layout';
 import styled from "styled-components";
 import PostHeaders from '../components/PostHeaders';
 import Spinner from "../components/Spinner";
+
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
 

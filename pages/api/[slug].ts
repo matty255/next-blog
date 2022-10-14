@@ -22,7 +22,8 @@ export default async function Handler(
         'description',
         'date',
         'featured',
-        'content'
+        'content',
+        'category'
       ])
     const content = await markdownToHtml(post.content || '')
     return content !== undefined
@@ -30,7 +31,7 @@ export default async function Handler(
         ...post,
         content,
       },})
-    : res.status(404).json({ message: `User with id: not found.` })
+    : res.status(404).json({ message: `Post: not found.` })
   }
 
 }

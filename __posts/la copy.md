@@ -5,6 +5,7 @@ image: /pic1.webp
 description: next.js에서 이미지를 적용하는 방법을 설명하는 글. 텍스트가 길어져도 잘리지 않게. 텍스트가 길어져도 잘리지 않게 텍스트가 길어져도 잘리지 않게 텍스트가 길어져도 잘리지 않게 텍스트가 길어져도 잘리지 않게
 date: '2022-10-10'
 featured: 3
+category: Trouble Shooting
 ---
 
 Some introductory text.

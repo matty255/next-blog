@@ -1,11 +1,11 @@
 ---
-slug: 'la'
-title: 한글로 블로그
+slug: 'types'
+title: 데이터 패칭 검색결과 받아오기
 image: https://image.kmib.co.kr/online_image/2015/0108/201501080811_61180009016353_1.jpg
 description: Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity.
 date: '2022-10-10'
-featured: 2
-category: typescript
+featured: 5
+category: Data Fetching
 ---
 
 Some introductory text.

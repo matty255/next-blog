@@ -1,10 +1,10 @@
 ---
-slug: 'la'
-title: 한글로 블로그
+slug: 'dummy'
+title: 타입스크립트 블로그
 image: https://image.kmib.co.kr/online_image/2015/0108/201501080811_61180009016353_1.jpg
 description: Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity. Coding is such a blissful activity.
 date: '2022-10-10'
-featured: 2
+featured: 4
 category: typescript
 ---
 

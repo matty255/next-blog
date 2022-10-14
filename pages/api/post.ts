@@ -12,7 +12,8 @@ export default function handler(
     'image',
     'description',
     'date',
-    'featured'
+    'featured',
+    'category'
   ])
   return res.status(200).json({allPosts})
 }

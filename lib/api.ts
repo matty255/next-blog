@@ -54,3 +54,13 @@ export function getMorePosts(slug:string, featured:string, fields: string[] = []
   const nearPosts = [posts[postIndex -1] , posts[postIndex], posts[postIndex +1]]
   return nearPosts
 }
+
+export function getPostsByCategory(category:string, fields: string[] = []) {
+  const slugs = getPostSlugs();
+  const posts = slugs
+    .map((slug) => getPostBySlug(slug, fields))
+    // sort posts by date in descending order
+    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1))
+  const FilteredByCategory = posts.filter((post) => post.category === category)
+  return FilteredByCategory;
+}

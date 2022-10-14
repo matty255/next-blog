@@ -5,6 +5,7 @@ image: /pic2.jpg
 description: Coding is such a blissful activity.
 date: '2022-10-10'
 featured: 1
+category: Next.js
 ---
 
 Some introductory text.

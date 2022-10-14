@@ -26,7 +26,7 @@ interface Props{
 }
 
 interface ctx {
-    params: {id:string, slug:string}
+    params: {id:string, slug:string, category:string}
 }
 
 

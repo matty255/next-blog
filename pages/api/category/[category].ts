@@ -1,15 +1,15 @@
 import { NextApiResponse, NextApiRequest } from 'next'
 import {Props, Posts} from "../../../types/types"
-import { getAllPosts, getMorePosts } from '../../../lib/api'
+import { getPostsByCategory } from '../../../lib/api'
 
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Props>
 ) {
   const { query } = req;
-  const { slug, featured } = query
-  if (typeof featured === 'string' && typeof slug === 'string') {
-    const allPosts = getMorePosts(slug, featured, [
+  const { category } = query
+  if (typeof category === 'string') {
+    const allPosts = getPostsByCategory(category, [
     'slug',
     'title',
     'image',
@@ -17,7 +17,6 @@ export default function handler(
     'date',
     'featured',
     'category'
-    
   ])
   return res.status(200).json({allPosts})
 }

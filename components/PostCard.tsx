@@ -3,28 +3,31 @@ import styled from 'styled-components';
 import Link from "next/link";
 import {Posts} from "../types/types"
 import Image from "next/image"
-
-// type Props = {
-//     slug : string, 
-//     title: string,
-//     image: string,
-//     featured: number,
-//     description: string,
-//     date:string
-//   }
+import { useRouter } from 'next/router';
 
 const PostCard = (post :Posts) => {
     const lazyRoot = React.useRef(null)
-    
+    const { query } = useRouter();
+
     return (<>
     <Link href={`/${post.slug}`}>
     <CardBox ref={lazyRoot}>
         <TitleBox>
+            { query.category === undefined ? <Link href={`sorted/${post.category}`}>
+       <span className='category'>
+       {post.category}
+        </span>
+        </Link> :  <span className='category'>
+       {post.category}
+        </span>}
+      
        <h2>{post.title}</h2>
        <span>{post.date}</span>
        <p>{post.description}</p>
+     
+
        </TitleBox>
-       <CoverImage lazyRoot={lazyRoot} src={post.image} alt="" width={150} height={150} placeholder="blur" blurDataURL={"./1x1-ffff007f.png"} />
+       <CoverImage lazyRoot={lazyRoot} src={post.image} alt="" width={180} height={180} placeholder="blur" blurDataURL={"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg=="} />
     </CardBox>
     </Link>
     </>)
@@ -36,7 +39,7 @@ const CardBox = styled.div`
     font-family: HelveticaNeue-Light, 'IBM Plex Sans KR', AppleSDGothicNeo-Light, sans-serif;
     width: 80vw;
     max-width: 60rem;
-    min-height: 10rem;
+    min-height: 12rem;
     margin: auto;
     border: 3px solid #333333;
     padding: 1rem;
@@ -47,14 +50,15 @@ const CardBox = styled.div`
     &:hover {
         border-color: #6675fd;
         }
-    &:active {
+    /* &:active {
     scale: 105%;
-    }
+    } */
 
 `
 
 const TitleBox = styled.div`
-     width: 50%;
+     min-width: 50%;
+     width: 70%;
      color: #333333;
      margin-bottom: 0.5rem;
      height: 4rem;
@@ -62,8 +66,8 @@ const TitleBox = styled.div`
     h2 {
         font-weight: 600;
         letter-spacing: 0.2rem;
-        width:100%;
-        max-width: 30rem;
+        width: 95%;
+        max-width: 40rem;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -99,6 +103,11 @@ const TitleBox = styled.div`
         /* display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical; */
+    }
+    .category {
+        &:hover {
+            color: #0117dd;
+        }
     }
 `
 
