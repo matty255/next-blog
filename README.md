@@ -1,5 +1,5 @@
 # 블로그 제작중
-## [배포주소](https://next-blog-jxfqiuhja-matty255.vercel.app/) : vercel로 배포
+## [배포주소](https://next-blog-bj7d6u0bg-matty255.vercel.app/) : vercel로 배포
 
 설치방법
 ```
@@ -32,6 +32,7 @@ yarn dev
 - 관심사에 따른 컴포넌트 분리 ✅
 - 개별 포스트 페이지 로딩시 스피너 표시 ✅
 - 개별 포스트 페이지 로딩시 헤더에 이전글, 다음글 표시 ✅
+- 카테고리 별 필터 정렬 기능 ✅
 - vercel에 배포해보기 ✅
 
 ------------
@@ -43,11 +44,10 @@ yarn dev
 - 폰트 최적화 ✅
   - doucment 파일을 커스텀하고 웹폰트 링크 달기
 
-- vercel Analytics를 써서 최적화 기법 전후 비교
-
-- Real Experience Score : 64 -> 80 으로 상승! 
-- 특히나 FCP에서 무척 높은 점수(94점)를 받았다.
-- CLS가 좀 낮은 편인데(62점) 페이지 진입시 포스트박스 자체를 대신할 홀더를 설치해봐야겠다.
+- vercel Analytics를 써서 최적화 기법 전후 비교 ✅
+  - Real Experience Score : 64 -> 80 으로 상승! 
+  - 특히나 FCP에서 무척 높은 점수(94점)를 받았다.
+  - CLS가 좀 낮은 편인데(62점) 페이지 진입시 포스트박스 자체를 대신할 홀더를 설치해봐야겠다.
 
 ----------------
 
