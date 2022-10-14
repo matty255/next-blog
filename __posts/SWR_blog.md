@@ -26,30 +26,50 @@ featured: 4
 - UI State
   next.js에서는 리액트 스테이트인데 클라이언트 스테이트입니다. 서버 스테이트와 달리 클라이언트가 조작하는 대로 변화하기 때문에 유효기간을 따지지 않고 항상 최신 상태를 유지합니다. 새로고침하면 날아가긴 하는데 브라우저 스토리지 같은데에 저장해두면 다시 불러와서 쓸 수 있습니다. **stale-while-revalidate** 전략을 쓰는 라이브러리를 사용하면 서버스테이트와 UI스테이트를 쉽게 연동할 수 있습니다.
 
-## Next.js 공식 문서를 읽고 최소 한 가지의 최적화 기법을 적용
+## **Next.js 공식 문서를 읽고 최적화 기법을 적용하기**
 
-- 이미지 컴포넌트를 사용한 최적화
+### image component를 사용한 최적화
 
-- 레이아웃 템플릿 https://nextjs.org/docs/basic-features/layouts
-
-- 폰트 다운받기 https://nextjs.org/docs/basic-features/font-optimization
+html에 있는 img 태그 대신에 **Next.js**에서 제공하는 image component를 사용하면 다음과 같은 이점들이 있습니다.
 
 ```js
-var React = require('react')
-var Markdown = require('react-markdown')
+import Image from 'next/image'
 
-React.render(
-  <Markdown source="# Your markdown here" />,
-  document.getElementById('content')
-)
+...
+
+<Image src={post.image} alt="" width={150} height={150} />
+
 ```
 
-Pretty neat, eh?
+### 1. lazy loading
 
-## Tables
+이미지는 뷰포트에 들어온 다음에 로드되고, 이미지 로드 전 걸어둘 빈 박스도 커스텀할 수 있습니다. priority 속성(우선 로딩)을 넣지 않으면 기본 설정은 **lazy**입니다. 레이지 루트를 지정하면 뷰포트가 아닌 해당 컴포넌트에 접근했을때 로딩된다고 합니다.
 
-|  Feature  | Support |
-| :-------: | ------- |
-|  tables   | ✔       |
-| alignment | ✔       |
-|   wewt    | ✔       |
+```javascript
+import Image from 'next/image';
+...
+<CoverImage
+  lazyRoot={lazyRoot}
+  src={post.image}
+  alt=""
+  width={150}
+  height={150}
+  placeholder="blur"
+  blurDataURL={'./1x1-ffff007f.png'}
+/>
+```
+
+이렇게 플레이스홀더 속성을 넣으면 로딩전 블러이펙트도 생기고 **Cumulative Layout Shift**(이미지 로딩 전에 레이아웃이 찌그러지는 현상)이 방지되어 좋습니다.
+
+### 2. 이미지 압축 기능
+
+내부 이미지 뿐만 아니라 외부 서버에서 가져온 이미지도 손쉽게 압축해서 내보내줍니다. 고화질의 이미지를 귀찮은 변환없이 사용할 수 있습니다. 압축률 조절도 가능합니다. 이 프로젝트에선 자동압축을 사용했습니다.
+
+### 3. 폰트 최적화 기능
+
+글꼴 선언 파일을 가져오기 위한 추가 네트워크 왕복을 제거하여 FCP(First Contentful Paint) 및 LCP(Large Contentful Paint)를 개선합니다. custom한 doucment.tsx 파일에 웹폰트의 링크를 등록하기만 하면 됩니다. 다운받아서 쓰는 글꼴에는 적용되지 않는 최적화입니다.
+
+> https://nextjs.org/docs/basic-features/font-optimization
+> ----> 공식문서!
+
+이렇게 각 포스트를 서버에 캐시로 담고 이미지와 폰트를 최적화해보았습니다. 꽤 느린 vercel 무료버전으로 배포했는데도 최초 로딩 이후엔 눈에 띄게 빨라져서 만족스러웠습니다.

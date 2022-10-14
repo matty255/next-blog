@@ -14,16 +14,17 @@ import Image from "next/image"
 //   }
 
 const PostCard = (post :Posts) => {
-
+    const lazyRoot = React.useRef(null)
+    
     return (<>
     <Link href={`/${post.slug}`}>
-    <CardBox>
+    <CardBox ref={lazyRoot}>
         <TitleBox>
        <h2>{post.title}</h2>
        <span>{post.date}</span>
        <p>{post.description}</p>
        </TitleBox>
-       <CoverImage src={post.image} alt="" width={150} height={150} priority />
+       <CoverImage lazyRoot={lazyRoot} src={post.image} alt="" width={150} height={150} placeholder="blur" blurDataURL={"./1x1-ffff007f.png"} />
     </CardBox>
     </Link>
     </>)
