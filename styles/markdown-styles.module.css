@@ -18,8 +18,9 @@
       max-width: 960px;
       font-weight: 400;
       color: #333333;
-      font-family: HelveticaNeue-Light, NanumGothic, AppleSDGothicNeo-Light, sans-serif-light, sans-serif;
+      font-family: HelveticaNeue-Light, 'IBM Plex Sans KR', AppleSDGothicNeo-Light, sans-serif;
       font-size: 1.2rem;
+      letter-spacing: 0.07rem;
   }
   
   

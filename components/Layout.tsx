@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import Footer from './Footer';
 type Props = {
     children: React.ReactNode
   }
@@ -9,6 +9,7 @@ const Layout = ({children} : Props) => {
     return (<>
     <MainBox>
         {children}
+        <Footer />
     </MainBox>
     </>)
 }
@@ -20,5 +21,4 @@ const MainBox = styled.div`
     height: 100vh; */
     width: 100%;
     max-width: 100%;
-    
 `

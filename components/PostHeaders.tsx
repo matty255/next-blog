@@ -60,6 +60,8 @@ const CardBox = styled.div`
     margin: -1px;
     display: flex;
     flex-direction: column;
+    font-weight: 600;
+    letter-spacing: 0.12rem;
     .home {
         cursor: pointer;
         position: absolute;
@@ -104,6 +106,8 @@ a {
     max-width: 15rem;
     display: inline-flex;
     opacity: 60%;
+    font-weight: 200;
+    letter-spacing: -1px;
 
     &:hover {
       color: #ffffff;

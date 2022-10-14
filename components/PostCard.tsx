@@ -32,6 +32,7 @@ const PostCard = (post :Posts) => {
 export default PostCard;
 
 const CardBox = styled.div`
+    font-family: HelveticaNeue-Light, 'IBM Plex Sans KR', AppleSDGothicNeo-Light, sans-serif;
     width: 80vw;
     max-width: 60rem;
     min-height: 10rem;
@@ -56,7 +57,10 @@ const TitleBox = styled.div`
      color: #333333;
      margin-bottom: 0.5rem;
      height: 4rem;
+     letter-spacing: 0.06rem;
     h2 {
+        font-weight: 600;
+        letter-spacing: 0.2rem;
         width:100%;
         max-width: 30rem;
         overflow: hidden;
@@ -65,12 +69,11 @@ const TitleBox = styled.div`
         word-break: break-all;
         display: block;
         /* color: #333333; */
-        font-family: Consolas, NanumGothic, Monaco, Andale Mono, monospace;
     }
     p {
         position: relative;
         left: 0%;
-        top: 10%;
+        top: 0%;
         width: 90%;
         max-width: 30rem;
         overflow: hidden;

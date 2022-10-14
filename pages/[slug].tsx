@@ -9,7 +9,7 @@ import PostBody from "../components/PostBody";
 import Layout from '../components/Layout';
 import styled from "styled-components";
 import PostHeaders from '../components/PostHeaders';
-
+import Spinner from "../components/Spinner";
 export async function getStaticPaths() {
   const posts = getAllPosts(['slug'])
 
@@ -52,11 +52,11 @@ export default function Post({ post }: PostType) {
       dedupingInterval: 10000,
     }}
   >
-    {data?.post !== undefined && 
+    {data?.post !== undefined ? 
     <Box>
       <PostHeaders slug={query.slug || data.post.slug} featured={data.post.featured} />
     <PostBody content={data.post.content} />
-  </Box>
+  </Box> : <Spinner />
    }   
     </SWRConfig>
     </Layout>
