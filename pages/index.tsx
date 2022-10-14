@@ -76,5 +76,6 @@ justify-content: center;
 align-items: center;
 margin: auto;
 gap: 3rem;
+margin-bottom: 0.5rem;
 `
 

@@ -18,7 +18,11 @@ const PostCard = (post :Posts) => {
     return (<>
     <Link href={`/${post.slug}`}>
     <CardBox>
+        <TitleBox>
        <h2>{post.title}</h2>
+       <span>{post.date}</span>
+       <p>{post.description}</p>
+       </TitleBox>
        <CoverImage src={post.image} alt="" width={150} height={150} priority />
     </CardBox>
     </Link>
@@ -28,31 +32,69 @@ const PostCard = (post :Posts) => {
 export default PostCard;
 
 const CardBox = styled.div`
-    font-family: Consolas, NanumGothic, Monaco, Andale Mono, monospace;
     width: 80vw;
     max-width: 60rem;
     min-height: 10rem;
     margin: auto;
-    background-color: #f0f0f0;
+    border: 3px solid #333333;
     padding: 1rem;
     display: flex;
     flex-shrink: 0;
     justify-content: space-between;
     cursor: pointer;
     &:hover {
-        background-color: yellow;
+        border-color: #6675fd;
         }
     &:active {
-    scale: 109%;
+    scale: 105%;
     }
+
+`
+
+const TitleBox = styled.div`
+     width: 50%;
+     color: #333333;
+     margin-bottom: 0.5rem;
+     height: 4rem;
     h2 {
-        width:70%;
+        width:100%;
+        max-width: 30rem;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         word-break: break-all;
         display: block;
-        color: #333333;
+        /* color: #333333; */
+        font-family: Consolas, NanumGothic, Monaco, Andale Mono, monospace;
+    }
+    p {
+        position: relative;
+        left: 0%;
+        top: 10%;
+        width: 90%;
+        max-width: 30rem;
+        overflow: hidden;
+        /* white-space: nowrap; */
+        text-overflow: ellipsis;
+        word-break: break-all;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    span {
+        position: relative;
+        left: 0.2%;
+        width: 90%;
+        max-width: 30rem;
+        bottom: 10%;
+        overflow: hidden;
+        color: #777777;
+        /* white-space: nowrap; */
+        text-overflow: ellipsis;
+        word-break: break-all;
+        /* display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical; */
     }
 `
 

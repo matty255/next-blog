@@ -68,6 +68,7 @@ const Box = styled.div`
   flex-direction: column;
   max-width: 60rem;
   margin:auto;
+  /* border: 3px solid #333333; */
 `
 
 // export async function getStaticProps({ params: { slug } }: ctx) {

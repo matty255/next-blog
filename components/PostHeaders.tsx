@@ -38,7 +38,7 @@ const MorePosts = ({ slug, featured }:Props) => {
         </div>
       )) : <><div>로딩중...</div></>}
        </SWRConfig>
-       <Link href={"/"}><p className='home'>홈</p></Link>
+       <Link href={"/"}><p className='home' title="home">☕</p></Link>
     </CardBox>
 
     </>)
@@ -47,22 +47,27 @@ const MorePosts = ({ slug, featured }:Props) => {
 export default MorePosts;
 
 const CardBox = styled.div`
+    color: #ffffff;
     font-family: Consolas, NanumGothic, Monaco, Andale Mono, monospace;
     min-width: 90%;
-    width: 95vw;
+    width: 97vw;
     max-width: 60rem;
     margin:auto;
     min-height: 12rem;
-    background-color: #3b3eff;
+    background-color: #0e1086;
+    border-bottom: 5px solid #3d3d3d;
     padding: 1rem;
+    margin: -1px;
     display: flex;
     flex-direction: column;
     .home {
         cursor: pointer;
         position: absolute;
         left: 10;
+        margin: 10px;
+        font-size: 2.5rem;
         &:hover {
-            background-color: #f0f0f0;
+          scale: 109%;
         }
     }
 `
@@ -71,7 +76,8 @@ const FlexBox = styled.div`
     font-size: 1.2rem;
     padding: 0.4rem;
     text-align: right;
-    color: #3b3eff;
+    color: #0e1086;
+    
 `
 
 const PostLink = styled.div`

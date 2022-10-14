@@ -30,9 +30,8 @@ export default PostBody;
 const CardBox = styled.div`
     min-width: 90%;
     width: 95vw;
-    max-width: 60rem;
+    max-width: 59rem;
     margin:auto;
-    background-color: #e7e7e7;
     padding: 0.97rem;
     display: flex;
     flex-direction: column;

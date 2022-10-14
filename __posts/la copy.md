@@ -2,7 +2,7 @@
 slug: la copy
 title: 이미지를 적용하는 방법 이미지를 적용하는 방법이미지를 적용하는 방법이미지를 적용하는 방법
 image: /pic1.webp
-description: Coding is such a blissful activity.
+description: next.js에서 이미지를 적용하는 방법을 설명하는 글. 텍스트가 길어져도 잘리지 않게. 텍스트가 길어져도 잘리지 않게 텍스트가 길어져도 잘리지 않게 텍스트가 길어져도 잘리지 않게 텍스트가 길어져도 잘리지 않게
 date: '2022-10-10'
 featured: 3
 ---
