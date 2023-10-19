@@ -8,14 +8,15 @@ const postsDirectory = path.join(process.cwd(), "posts");
 
 const md = new MarkdownIt();
 
-export function getSortedPostsData(): PostData[] {
+export function getSortedPostsData(locale: string): PostData[] {
+  const localeDirectory = path.join(postsDirectory, locale);
   const categories = fs
-    .readdirSync(postsDirectory)
+    .readdirSync(localeDirectory)
     .filter((dir) => dir !== ".git");
   let allPostsData: PostData[] = [];
 
   categories.forEach((category) => {
-    const categoryDirectory = path.join(postsDirectory, category);
+    const categoryDirectory = path.join(localeDirectory, category);
     const fileNames = fs.readdirSync(categoryDirectory);
 
     const categoryPosts = fileNames.map((fileName) => {
@@ -36,18 +37,20 @@ export function getSortedPostsData(): PostData[] {
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export function getAllPostIds(): PostIdParams[] {
+export function getAllPostIds(locale: string): PostIdParams[] {
+  const localeDirectory = path.join(postsDirectory, locale);
   const categories = fs
-    .readdirSync(postsDirectory)
+    .readdirSync(localeDirectory)
     .filter((dir) => dir !== ".git");
   let postParams: PostIdParams[] = [];
 
   categories.forEach((category) => {
-    const categoryDirectory = path.join(postsDirectory, category);
+    const categoryDirectory = path.join(localeDirectory, category);
     const fileNames = fs.readdirSync(categoryDirectory);
 
     const categoryParams = fileNames.map((fileName) => ({
       params: {
+        locale,
         category,
         id: fileName.replace(/\.md$/, ""),
       },
@@ -60,10 +63,11 @@ export function getAllPostIds(): PostIdParams[] {
 }
 
 export async function getPostData(
+  locale: string,
   category: string,
   id: string
 ): Promise<PostContentData> {
-  const fullPath = path.join(postsDirectory, category, `${id}.md`);
+  const fullPath = path.join(postsDirectory, locale, category, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
   const contentHtml = md.render(matterResult.content);
@@ -75,14 +79,18 @@ export async function getPostData(
   };
 }
 
-export function getPostsByCategory(category: string): PostData[] {
-  const allPosts = getSortedPostsData();
+export function getPostsByCategory(
+  locale: string,
+  category: string
+): PostData[] {
+  const allPosts = getSortedPostsData(locale);
   return allPosts.filter((post) => post.category === category);
 }
 
-export function getAllCategories(): string[] {
+export function getAllCategories(locale: string): string[] {
+  const localeDirectory = path.join(postsDirectory, locale);
   const categories = fs
-    .readdirSync(postsDirectory)
+    .readdirSync(localeDirectory)
     .filter((dir) => dir !== ".git");
   return categories;
 }

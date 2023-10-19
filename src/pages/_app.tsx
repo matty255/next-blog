@@ -1,11 +1,11 @@
+import { appWithTranslation } from "next-i18next";
 import { AppProps } from "next/app";
-import { RecoilRoot } from "recoil";
-
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { RecoilRoot } from "recoil";
 import "./globals.css";
 
-export default function App({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const [cssLoaded, setCssLoaded] = useState(false);
   // console.log(cssLoaded);
   useEffect(() => {
@@ -34,3 +34,4 @@ export default function App({ Component, pageProps }: AppProps) {
     </RecoilRoot>
   );
 }
+export default appWithTranslation(App);

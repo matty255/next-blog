@@ -1,8 +1,8 @@
 import {
-  VscLayoutSidebarLeft,
-  VscLayoutPanel,
-  VscLayoutSidebarRightOff,
   VscLayout,
+  VscLayoutPanel,
+  VscLayoutSidebarLeft,
+  VscLayoutSidebarRightOff,
   VscSearch,
 } from "react-icons/vsc";
 
@@ -27,7 +27,7 @@ export default function TitleBar() {
           </Link>
         )} */}
         {/* <DarkModeToggle /> */}
-        <ToggleSwitch />
+        <ToggleSwitch />\
         <div
           onClick={!isShown ? toggle : () => {}}
           className="group relative items-center cursor-pointer p-1 w-full md:w-1/2 rounded-md col-start-3 col-end-11 dark:hover:bg-slate-900 hover:bg-blue-300  dark:bg-slate-800 flex justify-center content-center m-auto font-semibold"
@@ -37,7 +37,6 @@ export default function TitleBar() {
             vscode-blog
           </p>
         </div>
-
         <div className="col-start-11 col-end-13 m-auto flex gap-4">
           {isDesktop && (
             <>

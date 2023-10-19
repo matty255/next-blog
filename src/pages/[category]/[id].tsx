@@ -1,17 +1,15 @@
+import { motion } from "framer-motion";
 import Head from "next/head";
-import Layout from "@/layout";
 import Date from "../../common/Date";
+import { profile } from "../../constants/profile";
 import {
   getAllPostIds,
   getPostData,
   getSortedPostsData,
 } from "../../lib/MakePosts";
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import { PostContentData, PostData, PostIdParams } from "../../types/common";
-import { profile } from "../../constants/profile";
-import { useRecoilState } from "recoil";
+import { PostContentData, PostData } from "../../types/common";
 
+import { GetStaticPropsContext } from "next";
 import Link from "next/link";
 import { withDataFetch } from "../../../hoc/withDataFetch";
 
@@ -92,19 +90,38 @@ function Post({
 export default withDataFetch(Post);
 
 export async function getStaticPaths() {
-  const paths = getAllPostIds();
+  const koPaths = getAllPostIds("ko").map((path) => ({
+    params: {
+      locale: "ko",
+      category: path.params.category,
+      id: path.params.id,
+    },
+  }));
+  const enPaths = getAllPostIds("en").map((path) => ({
+    params: {
+      locale: "en",
+      category: path.params.category,
+      id: path.params.id,
+    },
+  }));
+  const paths = [...koPaths, ...enPaths];
   return {
     paths,
     fallback: false,
   };
 }
 
-export async function getStaticProps({ params }: PostIdParams) {
-  const postData = await getPostData(params.category, params.id);
-  const allPostsData = getSortedPostsData();
-  const allPostsParams = getAllPostIds();
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const { params } = context;
+  const locale = context.locale ?? "ko"; // 로케일 정보 가져오기
+  const { category, id } = params as { category: string; id: string };
 
-  const currentIndex = allPostsData.findIndex((post) => post.id === params.id);
+  console.log(params);
+  const postData = await getPostData(locale, category, id); // 순서 변경
+  const allPostsData = getSortedPostsData(locale);
+  const allPostsParams = getAllPostIds(locale); // "ko"를 locale로 변경
+
+  const currentIndex = allPostsData.findIndex((post) => post.id === id); // params.id를 id로 변경
   const prevPost = allPostsData[currentIndex - 1] || null;
   const nextPost = allPostsData[currentIndex + 1] || null;
 
@@ -130,22 +147,3 @@ export async function getStaticProps({ params }: PostIdParams) {
     props,
   };
 }
-
-// // getStaticPaths와 getStaticProps를 제거하고 getServerSideProps를 사용
-// export async function getServerSideProps(context: PostIdParams) {
-//   const { params } = context;
-//   const postData = await getPostData(params.category, params.id);
-
-//   // 페이지가 존재하지 않는 경우 404 페이지를 보여줍니다.
-//   if (!postData) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-
-//   return {
-//     props: {
-//       postData,
-//     },
-//   };
-// }

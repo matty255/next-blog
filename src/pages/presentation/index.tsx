@@ -1,5 +1,6 @@
 import ScrollSnap from "@/common/ScrollSnap";
 import { getSortedPostsData } from "@/lib/MakePosts";
+import { GetStaticPropsContext } from "next";
 import { withDataFetch } from "../../../hoc/withDataFetch";
 
 const components = [
@@ -19,8 +20,10 @@ function Presentation() {
 
 export default withDataFetch(Presentation);
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const { params } = context;
+  const locale = context.locale ?? "ko"; // 로케일 정보 가져오기
+  const allPostsData = getSortedPostsData(locale);
   const allCategories: string[] = Array.from(
     new Set(allPostsData.map((post) => post.category))
   );
