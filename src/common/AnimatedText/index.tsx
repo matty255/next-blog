@@ -1,24 +1,24 @@
-import React, { useEffect } from "react";
-import "splitting/dist/splitting-cells.css";
-import "splitting/dist/splitting.css";
-
-const Splitting: any = require("splitting");
+import React from "react";
+import { animated, useSpring } from "react-spring";
 
 type Props = {
   text: string;
 };
 
 const AnimatedText: React.FC<Props> = ({ text }) => {
-  useEffect(() => {
-    setTimeout(() => {
-      Splitting({ target: "[data-splitting]" });
-    }, 0);
-  }, []);
+  const props = useSpring({
+    loop: true,
+    to: [
+      { opacity: 1, color: "#ffaaee" },
+      { opacity: 0, color: "rgb(14,26,19)" },
+    ],
+    from: { opacity: 0, color: "red" },
+  });
 
   return (
-    <h1 className="font-nanum-variable" data-splitting>
+    <animated.h1 style={props} className="font-nanum-variable">
       {text}
-    </h1>
+    </animated.h1>
   );
 };
 
