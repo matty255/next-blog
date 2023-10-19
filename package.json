@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "update-submodule": "git submodule update --remote --merge",
+    "dev": "npm run update-submodule && next dev",
     "vercel-install": "sh vercel-submodule-workaround.sh && npm install --production=false",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@svgr/webpack": "^8.1.0",
-    "@types/react-lottie": "^1.2.7",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.16.4",
     "gray-matter": "^4.0.3",
@@ -24,6 +23,9 @@
     "recoil": "^0.7.7"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "@types/react-lottie": "^1.2.7",
+    "@types/splitting": "^1.0.4",
     "@tailwindcss/typography": "^0.5.10",
     "@types/markdown-it": "^13.0.2",
     "@types/node": "^20",

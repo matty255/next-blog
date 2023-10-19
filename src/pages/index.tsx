@@ -1,16 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Date from "../common/Date";
 
 import { getSortedPostsData } from "../lib/MakePosts";
-import React from "react";
 
 import { motion } from "framer-motion";
-import { TypingAnimationArray, profile } from "../constants/profile";
-import TypingAnimationText from "../common/TypingAnimationText";
+import { profile } from "../constants/profile";
 
 import { PostData, PostSortedArray } from "@/types/common";
 
