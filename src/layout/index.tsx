@@ -50,9 +50,6 @@ export default function Layout({
   const StatusBar = dynamic(() => import("../components/Bars/StatusBar"), {
     ssr: false,
   });
-  const AnimatedText = dynamic(() => import("../common/AnimatedText"), {
-    ssr: false,
-  });
 
   return (
     <div
@@ -77,7 +74,6 @@ export default function Layout({
           <TitleBar />
         </header>
         <main className="pt-10 min-h-screen bg-slate-100 dark:bg-slate-700 ">
-          <AnimatedText text={"리액트네이티브"} />
           <AddressBar allPostsData={allPostsData} postData={postData} />
           <div className="p-10 pt-0">{children}</div>
         </main>

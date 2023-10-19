@@ -11,6 +11,7 @@ import { profile } from "../constants/profile";
 
 import { PostData, PostSortedArray } from "@/types/common";
 
+import dynamic from "next/dynamic";
 import { withDataFetch } from "../../hoc/withDataFetch";
 
 function Home({ allPostsData, allCategories }: PostSortedArray) {
@@ -19,7 +20,9 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
   const [wordIndex, setWordIndex] = useState(0);
 
   // console.log(allPostsData);
-
+  const AnimatedText = dynamic(() => import("../common/AnimatedText"), {
+    ssr: false,
+  });
   return (
     <>
       <Head>
@@ -64,7 +67,9 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
           ))}
         </section> */}
         <section>
-          <h2>Posts</h2>
+          <div className="h-24 flex">
+            Posts <AnimatedText text={"리액트네이티브"} />
+          </div>
           <ul>
             {allPostsData.map(
               ({ id, category, date, title, image }: PostData) => (
