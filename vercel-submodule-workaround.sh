@@ -14,6 +14,14 @@ fi
 # stop execution on error - don't let it build if something goes wrong
 set -e
 
+# Update the submodule to the latest commit on the main branch
+cd $SUBMODULE_PATH
+git pull origin main
+cd ..
+git add $SUBMODULE_PATH
+git commit -m "Update submodule to latest commit"
+git push origin main
+
 # get submodule commit
 output=`git submodule status --recursive` # get submodule info
 no_prefix=${output#*-} # get rid of the prefix
