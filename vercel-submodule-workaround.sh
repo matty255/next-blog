@@ -14,14 +14,6 @@ fi
 # stop execution on error - don't let it build if something goes wrong
 set -e
 
-# Update the submodule to the latest commit on the main branch
-cd $SUBMODULE_PATH
-git pull origin main
-cd ..
-git add $SUBMODULE_PATH
-git commit -m "Update submodule to latest commit"
-git push origin main
-
 # get submodule commit
 output=`git submodule status --recursive` # get submodule info
 no_prefix=${output#*-} # get rid of the prefix
@@ -35,8 +27,8 @@ cd tmp # go into the tmp folder
 # checkout the current submodule commit
 git init # initialise empty repo
 git remote add origin https://$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
-git fetch --depth=1 origin $COMMIT # fetch only the required version
-git checkout $COMMIT # checkout on the right commit
+git fetch --depth=1 origin main # fetch only the required version from main branch
+git checkout FETCH_HEAD # checkout on the fetched commit
 
 # move the submodule from tmp to the submodule path
 cd .. # go folder up
