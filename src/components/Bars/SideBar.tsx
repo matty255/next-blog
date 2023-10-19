@@ -1,34 +1,25 @@
 import {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-
-import {
-  VscHome,
-  VscSearch,
-  VscFiles,
-  VscSourceControl,
+  VscAccount,
+  VscCommentDiscussion,
   VscDebugAltSmall,
   VscExtensions,
-  VscAccount,
+  VscFiles,
+  VscHome,
+  VscSearch,
   VscSettingsGear,
-  VscCommentDiscussion,
+  VscSourceControl,
 } from "react-icons/vsc";
 
+import { profile } from "@/constants/profile";
+import { sideBarOpenState } from "@/store/sideBarOpenState";
+import { PostData, SideBarCategory } from "@/types/common";
 import dynamic from "next/dynamic";
-import Search from "../AddOns/Search";
+import { useRouter } from "next/navigation";
+import { useRecoilState } from "recoil";
 import FolderTree from "../AddOns/FolderTree";
 import HistoryComponent from "../AddOns/HistoryBox";
-import { PostData, SideBarCategory } from "@/types/common";
 import HomeAddOn from "../AddOns/HomeAddOn";
-import useObserverGradient from "@/hooks/useObserverGradient";
-import { useRouter } from "next/navigation";
-import { profile } from "@/constants/profile";
-import { useRecoilState } from "recoil";
-import { sideBarOpenState } from "@/store/sideBarOpenState";
+import Search from "../AddOns/Search";
 
 const FadeInAnimation = dynamic(() => import("@/common/FadeInAnimation"));
 
@@ -119,7 +110,10 @@ export default function SideBar({
             <VscCommentDiscussion
               key="comment-discussion"
               className="w-10 h-auto text-white cursor-pointer dark:text-slate-700 hover:text-blue-500 dark:hover:text-amber-400"
-              onClick={consoleForAdmin}
+              onClick={() => {
+                setSidebarOpenCategory("presentation");
+                router.push("/presentation");
+              }}
             />
             <VscAccount
               key="account"

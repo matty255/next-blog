@@ -13,6 +13,13 @@ type TimelineProps = {
   items: TimelineItem[];
 };
 
+const components = [
+  <div key="1">Page 1</div>,
+  <div key="2">Page 2</div>,
+  <div key="3">Page 3</div>,
+  // ... more components
+];
+
 const items: TimelineItem[] = [
   {
     direction: "left",
@@ -60,42 +67,11 @@ const items: TimelineItem[] = [
 ];
 
 function Graph() {
-  // const TimelineItem: React.FC<TimelineItemProps> = ({
-  //   text,
-  //   date,
-  //   iconType,
-  // }) => {
-  //   return (
-  //     <li className="mb-10 ml-6 relative w-64">
-  //       <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-  //         <VscGitMerge className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" />
-  //       </span>
-  //       <h3 className="flex items-center justify-between mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-  //         {text}
-  //         <span className="bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300 ml-3">
-  //           Latest
-  //         </span>
-  //       </h3>
-  //     </li>
-  //   );
-  // };
-
   return (
     <div className="relative overflow-hidden w-full h-full rounded-xl">
       <div className=" flex flex-col justify-between md:min-h-[480px] text-center rounded-xl dark:border-gray-700">
         <div></div>
         <div className="mt-8">
-          {/* <ol className="relative border-l border-gray-200 dark:border-gray-700 flex flex-col">
-            {historys.map((item, index) => (
-              <TimelineItem
-                key={index}
-                date={item.date}
-                text={item.text}
-                iconType={item.iconType}
-              />
-            ))}
-          </ol> */}
-
           <Timeline items={items} />
         </div>
       </div>

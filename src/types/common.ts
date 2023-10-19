@@ -50,18 +50,19 @@ type SideBarCategory =
   | "contact"
   | "graph"
   | "trouble-shooting"
+  | "presentation"
   | "recommendation";
 type PostCategory = "all" | "react" | "nextjs" | "typescript" | "javascript";
 
 export type {
   LayoutProps,
-  PostData,
-  PostContentData,
-  PostIdParams,
-  Size,
-  PostFilteredArray,
-  SideBarCategory,
-  PostCategory,
   PostArray,
+  PostCategory,
+  PostContentData,
+  PostData,
+  PostFilteredArray,
+  PostIdParams,
   PostSortedArray,
+  SideBarCategory,
+  Size,
 };
