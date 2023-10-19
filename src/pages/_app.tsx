@@ -7,7 +7,7 @@ import "./globals.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [cssLoaded, setCssLoaded] = useState(false);
-  console.log(cssLoaded);
+  // console.log(cssLoaded);
   useEffect(() => {
     // Set a timeout to simulate "waiting for CSS to load"
     const timer = setTimeout(() => {

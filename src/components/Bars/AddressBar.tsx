@@ -30,7 +30,7 @@ export default function AddressBar({
       return matchingPost ? matchingPost.category : null;
     }
   }
-  console.log(pathname);
+  // console.log(pathname);
 
   return (
     <div className="pl-2 shadow-md sticky top-11 bg-blue-200 dark:bg-slate-700 font-godo-b">

@@ -11,6 +11,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      width: {
+        "sidebar-open": "calc(100% - 150px)",
+        "sidebar-closed": "calc(100% - 20px)",
+      },
       keyframes: {
         blink: {
           "0%": { opacity: "1" },

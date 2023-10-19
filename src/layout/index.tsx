@@ -66,14 +66,18 @@ export default function Layout({
       </div>
 
       <div
-        className={`scrollbar-hide h-screen w-full overflow-scroll transition-all duration-300 ${
+        className={`scrollbar-hide h-screen overflow-scroll transition-all duration-300 ${
           sidebarState.isOpen ? "md:ml-80" : "md:ml-20"
-        }`}
+        } ${sidebarState.isOpen ? "md:w-sidebar-open" : "md:w-sidebar-closed"}`}
       >
         <header>
           <TitleBar />
         </header>
-        <main className="pt-10 min-h-screen bg-slate-100 dark:bg-slate-700 ">
+        <main
+          className={`pt-10 min-h-screen bg-slate-100 dark:bg-slate-700 ${
+            sidebarState.isOpen ? "md:w-sidebar-open" : "md:w-sidebar-closed"
+          }  `}
+        >
           <AddressBar allPostsData={allPostsData} postData={postData} />
           <div className="p-10 pt-0">{children}</div>
         </main>
