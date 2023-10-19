@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "vercel-install": "sh improved-vercel-submodule-workaround.sh && npm install --production=false",
+    "vercel-install": "sh vercel-submodule-workaround.sh && npm install --production=false",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
