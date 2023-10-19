@@ -15,25 +15,23 @@ fi
 set -e
 
 # get submodule commit
-output=`git submodule status --recursive` # get submodule info
-no_prefix=${output#*-} # get rid of the prefix
-COMMIT=${no_prefix% *} # get rid of the suffix
+output=$(git -C $SUBMODULE_PATH rev-parse HEAD)  # get current commit hash of the submodule
+COMMIT=$output  # use the commit hash directly
 
 # set up an empty temporary work directory
-rm -rf tmp || true # remove the tmp folder if exists
-mkdir tmp # create the tmp folder
-cd tmp # go into the tmp folder
+rm -rf tmp || true  # remove the tmp folder if exists
+mkdir tmp  # create the tmp folder
+cd tmp  # go into the tmp folder
 
 # checkout the current submodule commit
-git init # initialise empty repo
-git remote add origin https://$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
-git fetch --depth=1 origin $COMMIT # fetch only the required version
-git checkout $COMMIT # checkout on the right commit
+git init  # initialise empty repo
+git remote add origin https://$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB  # add origin of the submodule
+git fetch --depth=1 origin $COMMIT  # fetch only the required version
+git checkout $COMMIT  # checkout on the right commit
 
-# move the submodule from tmp to the submodule path
-cd .. # go folder up
-rm -rf tmp/.git # remove .git 
-mv tmp/* $SUBMODULE_PATH/ # move the submodule to the submodule path
+cd ..  # go folder up
+rm -rf $SUBMODULE_PATH/*  # remove existing files in the submodule path
+mv tmp/* $SUBMODULE_PATH/  # move the submodule to the submodule path
 
 # clean up
-rm -rf tmp # remove the tmp folder
+rm -rf tmp  # remove the tmp folder

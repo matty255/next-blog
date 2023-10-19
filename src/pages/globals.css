@@ -50,3 +50,10 @@
   font-weight: 500;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "NanumSquareNeo";
+  src: url("/fonts/NanumSquareNeo-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 50% 200%;
+}

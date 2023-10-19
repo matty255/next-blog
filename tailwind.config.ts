@@ -34,6 +34,7 @@ const config: Config = {
         "maruburi-bold": ["MaruBuri-Bold", "sans-serif"],
         "godo-b": ["GodoB", "sans-serif"],
         "godo-m": ["GodoM", "sans-serif"],
+        nanum: ["NanumSquareNeo", "sans-serif"],
       },
     },
   },
