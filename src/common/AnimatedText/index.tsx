@@ -3,9 +3,10 @@ import React from "react";
 
 type Props = {
   text: string;
+  bold?: boolean;
 };
 
-const AnimatedText: React.FC<Props> = ({ text }) => {
+const AnimatedText: React.FC<Props> = ({ text, bold }) => {
   const letters = text.split("").map((letter, index) => (
     <motion.div
       key={index}
@@ -22,7 +23,7 @@ const AnimatedText: React.FC<Props> = ({ text }) => {
         repeatType: "loop", // Loop type
       }}
       style={{
-        fontVariationSettings: '"wght" 400, "wdth" 100',
+        fontWeight: bold ? "bold" : "normal",
       }}
       className="font-nanum-variable inline-block"
     >
