@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "MaruBuri-Bold";
+  src: url("../../assets/fonts/MaruBuri-Bold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MaruBuri-SemiBold";
+  src: url("../../assets/fonts/MaruBuri-SemiBold.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MaruBuri-Regular";
+  src: url("../../assets/fonts/MaruBuri-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MaruBuri-Light";
+  src: url("../../assets/fonts/MaruBuri-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MaruBuri-ExtraLight";
+  src: url("../../assets/fonts/MaruBuri-ExtraLight.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GodoM";
+  src: url("../../assets/fonts/GodoM.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GodoB";
+  src: url("../../assets/fonts/GodoB.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
