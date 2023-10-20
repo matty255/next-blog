@@ -11,7 +11,6 @@ import { profile } from "../constants/profile";
 
 import { BlogContextProps, PostData, PostSortedArray } from "@/types/common";
 
-import { useTranslation } from "next-i18next";
 import dynamic from "next/dynamic";
 import { withDataFetch } from "../../hoc/withDataFetch";
 
@@ -24,7 +23,7 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
   const AnimatedText = dynamic(() => import("../common/AnimatedText"), {
     ssr: false,
   });
-  const { t, i18n } = useTranslation("common");
+
   return (
     <>
       <Head>
@@ -68,7 +67,7 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
             />
           ))}
         </section> */}
-        {t("hello")}
+
         <section>
           <div className="h-24 flex">
             Posts <AnimatedText text={"리액트네이티브"} />
@@ -90,11 +89,7 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
                           : "none",
                     }}
                   >
-                    <Link
-                      href={`/[category]/[id]`}
-                      as={`/${category}/${id}`}
-                      locale={i18n.language} // locale 속성 추가
-                    >
+                    <Link href={`/[category]/[id]`} as={`/${category}/${id}`}>
                       {title}
                     </Link>
                     <br />
