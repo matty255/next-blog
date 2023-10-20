@@ -1,96 +1,128 @@
-import fs from "fs";
+import { promises as fsPromises } from "fs";
 import matter from "gray-matter";
 import MarkdownIt from "markdown-it";
 import path from "path";
-import { PostContentData, PostData, PostIdParams } from "../types/common";
+import {
+  Locale,
+  PostContentData,
+  PostData,
+  PostIdParams,
+} from "../types/common";
+import { localeToFolderName } from "./utils";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
 const md = new MarkdownIt();
 
-export function getSortedPostsData(locale: string): PostData[] {
-  const localeDirectory = path.join(postsDirectory, locale);
-  const categories = fs
-    .readdirSync(localeDirectory)
-    .filter((dir) => dir !== ".git");
+export async function getSortedPostsData(locale: Locale): Promise<PostData[]> {
+  const folderName = localeToFolderName(locale);
+  const localeDirectory = path.join(postsDirectory, folderName);
   let allPostsData: PostData[] = [];
 
-  categories.forEach((category) => {
-    const categoryDirectory = path.join(localeDirectory, category);
-    const fileNames = fs.readdirSync(categoryDirectory);
-
-    const categoryPosts = fileNames.map((fileName) => {
-      const id = fileName.replace(/\.md$/, "");
-      const fullPath = path.join(categoryDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, "utf8");
-      const matterResult = matter(fileContents);
-      return {
-        id,
-        category,
-        ...matterResult.data,
-      } as PostData;
-    });
-
-    allPostsData = [...allPostsData, ...categoryPosts];
-  });
+  try {
+    const categories = await fsPromises.readdir(localeDirectory);
+    for (const category of categories) {
+      const categoryDirectory = path.join(localeDirectory, category);
+      const fileNames = await fsPromises.readdir(categoryDirectory);
+      const categoryPosts = await Promise.all(
+        fileNames.map(async (fileName) => {
+          const id = fileName.replace(/\.md$/, "");
+          const fullPath = path.join(categoryDirectory, fileName);
+          const fileContents = await fsPromises.readFile(fullPath, "utf8");
+          const matterResult = matter(fileContents);
+          return {
+            id,
+            category,
+            ...matterResult.data,
+          } as PostData;
+        })
+      );
+      allPostsData = [...allPostsData, ...categoryPosts];
+    }
+  } catch (error) {
+    console.error("Failed to read directory:", error);
+    // ... further error handling
+  }
 
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export function getAllPostIds(locale: string): PostIdParams[] {
-  const localeDirectory = path.join(postsDirectory, locale);
-  const categories = fs
-    .readdirSync(localeDirectory)
-    .filter((dir) => dir !== ".git");
+export async function getAllPostIds(): Promise<PostIdParams[]> {
+  const locales: Locale[] = ["ko-KR", "en-US"]; // 사용 가능한 locale 목록
   let postParams: PostIdParams[] = [];
 
-  categories.forEach((category) => {
-    const categoryDirectory = path.join(localeDirectory, category);
-    const fileNames = fs.readdirSync(categoryDirectory);
-
-    const categoryParams = fileNames.map((fileName) => ({
-      params: {
-        locale,
-        category,
-        id: fileName.replace(/\.md$/, ""),
-      },
-    }));
-
-    postParams = [...postParams, ...categoryParams];
-  });
+  try {
+    for (const locale of locales) {
+      const folderName = localeToFolderName(locale);
+      const localeDirectory = path.join(postsDirectory, folderName);
+      const categories = await fsPromises.readdir(localeDirectory);
+      for (const category of categories) {
+        const categoryDirectory = path.join(localeDirectory, category);
+        const fileNames = await fsPromises.readdir(categoryDirectory);
+        const categoryParams = fileNames.map((fileName) => ({
+          params: {
+            category,
+            id: fileName.replace(/\.md$/, ""),
+          },
+          query: {
+            locale,
+          },
+        }));
+        postParams = [...postParams, ...categoryParams];
+      }
+    }
+  } catch (error) {
+    console.error("Failed to read directory:", error);
+    // ... further error handling
+  }
 
   return postParams;
 }
 
 export async function getPostData(
-  locale: string,
+  locale: Locale,
   category: string,
   id: string
-): Promise<PostContentData> {
-  const fullPath = path.join(postsDirectory, locale, category, `${id}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const matterResult = matter(fileContents);
-  const contentHtml = md.render(matterResult.content);
+): Promise<PostContentData | null> {
+  const folderName = localeToFolderName(locale);
+  const fullPath = path.join(postsDirectory, folderName, category, `${id}.md`); // folderName 사용
 
-  return {
-    id,
-    contentHtml,
-    ...matterResult.data,
-  };
+  try {
+    const fileContents = await fsPromises.readFile(fullPath, "utf8");
+    const matterResult = matter(fileContents);
+    const contentHtml = md.render(matterResult.content);
+    return {
+      id,
+      contentHtml,
+      ...matterResult.data,
+    };
+  } catch (error) {
+    console.error("Failed to read file:", error);
+    // 에러 발생 시 null 반환
+    return null;
+    // 또는 에러를 던질 수 있습니다: throw error;
+  }
 }
 
-export function getPostsByCategory(
-  locale: string,
+export async function getPostsByCategory(
+  locale: Locale,
   category: string
-): PostData[] {
-  const allPosts = getSortedPostsData(locale);
+): Promise<PostData[]> {
+  const allPosts = await getSortedPostsData(locale);
   return allPosts.filter((post) => post.category === category);
 }
 
-export function getAllCategories(locale: string): string[] {
-  const localeDirectory = path.join(postsDirectory, locale);
-  const categories = fs
-    .readdirSync(localeDirectory)
-    .filter((dir) => dir !== ".git");
-  return categories;
+export async function getAllCategories(locale: Locale): Promise<string[]> {
+  const folderName = localeToFolderName(locale);
+  const localeDirectory = path.join(postsDirectory, folderName);
+
+  try {
+    const categories = await fsPromises.readdir(localeDirectory);
+    return categories.filter((dir) => dir !== ".git");
+  } catch (error) {
+    console.error("Failed to read directory:", error);
+    // 빈 배열을 반환하거나, 에러를 던질 수 있습니다.
+    return [];
+    // 또는: throw error;
+  }
 }

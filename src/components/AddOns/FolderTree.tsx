@@ -120,6 +120,10 @@ const FolderTree = ({ allPostsData }: { allPostsData?: PostData[] }) => {
   const [initialRender, setInitialRender] = useState(true);
 
   useEffect(() => {
+    if (!Array.isArray(allPostsData)) {
+      console.error("Invalid allPostsData:", allPostsData);
+      return;
+    }
     const newFolderTree = allPostsData ? createFolderTree(allPostsData) : [];
     setFolderTree(newFolderTree);
     setInitialRender(false);

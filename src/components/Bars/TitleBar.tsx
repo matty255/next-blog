@@ -10,6 +10,7 @@ import useMediaQuery from "../../hooks/useMediaquery";
 
 import useToggle from "../../hooks/useToggle";
 
+import LocaleSwitch from "../AddOns/LocaleSwitch";
 import ToggleSwitch from "../AddOns/ToggleSwitch";
 
 export default function TitleBar() {
@@ -27,10 +28,12 @@ export default function TitleBar() {
           </Link>
         )} */}
         {/* <DarkModeToggle /> */}
-        <ToggleSwitch />\
+        <ToggleSwitch />
+        <LocaleSwitch />
         <div
           onClick={!isShown ? toggle : () => {}}
-          className="group relative items-center cursor-pointer p-1 w-full md:w-1/2 rounded-md col-start-3 col-end-11 dark:hover:bg-slate-900 hover:bg-blue-300  dark:bg-slate-800 flex justify-center content-center m-auto font-semibold"
+          className="group r
+          elative items-center cursor-pointer p-1 w-full md:w-1/2 rounded-md col-start-3 col-end-11 dark:hover:bg-slate-900 hover:bg-blue-300  dark:bg-slate-800 flex justify-center content-center m-auto font-semibold"
         >
           <VscSearch className="text-slate-300  opacity-70 w-5 h-5" />
           <p className="pl-2 text-slate-300 group-hover:text-white dark:text-slate-100">

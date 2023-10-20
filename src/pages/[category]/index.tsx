@@ -3,12 +3,15 @@ import {
   getPostsByCategory,
   getSortedPostsData,
 } from "@/lib/MakePosts"; // getSortedPostsData 추가
-import { GetStaticPropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { withDataFetch } from "../../../hoc/withDataFetch"; // HOC import
-import { PostData, PostFilteredArray } from "../../types/common";
+import {
+  BlogContextProps,
+  PostData,
+  PostFilteredArray,
+} from "../../types/common";
 
 interface CategoryPageProps extends PostFilteredArray {
   allPostsData: PostData[]; // 추가된 부분
@@ -40,26 +43,28 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ posts, allPostsData }) => {
 
 export default withDataFetch(CategoryPage); // HOC 적용
 
-export async function getStaticPaths(context: GetStaticPropsContext) {
-  const koCategories = getAllCategories(context.locale ? context.locale : "ko");
-  const koPaths = koCategories.map((category) => ({
-    params: { locale: "ko", category },
+export async function getStaticPaths(context: BlogContextProps) {
+  const koCategories = await getAllCategories(
+    context.locale ? context.locale : "ko-KR"
+  );
+
+  const koPaths = koCategories.map((category: string) => ({
+    params: { locale: "ko-KR", category },
   }));
-  const enPaths = koCategories.map((category) => ({
-    params: { locale: "en", category },
+  const enPaths = koCategories.map((category: string) => ({
+    params: { locale: "en-EN", category },
   }));
 
   const paths = [...koPaths, ...enPaths];
   return { paths, fallback: false };
 }
-
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getStaticProps(context: BlogContextProps) {
   const { params } = context;
-  const locale = context.locale ?? "ko"; // 로케일 정보 가져오기
+  const locale = context.locale ?? "ko-KR"; // 로케일 정보 가져오기
   const category = params?.category as string;
 
-  const posts = getPostsByCategory(locale, category);
-  const allPostsData = getSortedPostsData(locale); // allPostsData 생성
+  const posts = await getPostsByCategory(locale, category); // await 키워드 추가
+  const allPostsData = await getSortedPostsData(locale); // await 키워드 추가
 
   return { props: { posts, allPostsData } }; // allPostsData 추가
 }

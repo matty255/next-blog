@@ -9,7 +9,7 @@ import { getSortedPostsData } from "../lib/MakePosts";
 import { motion } from "framer-motion";
 import { profile } from "../constants/profile";
 
-import { PostData, PostSortedArray } from "@/types/common";
+import { BlogContextProps, PostData, PostSortedArray } from "@/types/common";
 
 import { useTranslation } from "next-i18next";
 import dynamic from "next/dynamic";
@@ -116,11 +116,13 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
 
 export default withDataFetch(Home);
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData("ko");
+export async function getStaticProps(context: BlogContextProps) {
+  const locale = context.locale ?? "ko-KR"; // context에서 locale 가져오기
+  const allPostsData = await getSortedPostsData(locale); // await 키워드 추가
   const allCategories: string[] = Array.from(
     new Set(allPostsData.map((post) => post.category))
   );
+
   return {
     props: {
       allPostsData,

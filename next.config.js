@@ -8,8 +8,8 @@ const nextConfig = {
     return config;
   },
   i18n: {
-    locales: ["en", "ko"],
-    defaultLocale: "ko",
+    locales: ["en-US", "ko-KR"], // Add the locales you need for your project
+    defaultLocale: "ko-KR",
   },
 };
 

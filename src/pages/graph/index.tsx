@@ -1,6 +1,6 @@
 import Timeline from "@/components/AddOns/TimeLine";
 import { getSortedPostsData } from "@/lib/MakePosts";
-import { GetStaticPropsContext } from "next";
+import { BlogContextProps } from "@/types/common";
 import { withDataFetch } from "../../../hoc/withDataFetch";
 
 type TimelineItem = {
@@ -83,13 +83,13 @@ function Graph() {
 
 export default withDataFetch(Graph);
 
-export async function getStaticProps(context: GetStaticPropsContext) {
-  const { params } = context;
-  const locale = context.locale ?? "ko"; // 로케일 정보 가져오기
-  const allPostsData = getSortedPostsData(locale);
+export async function getStaticProps(context: BlogContextProps) {
+  const locale = context.locale ?? "ko-KR"; // context에서 locale 가져오기
+  const allPostsData = await getSortedPostsData(locale); // await 키워드 추가
   const allCategories: string[] = Array.from(
     new Set(allPostsData.map((post) => post.category))
   );
+
   return {
     props: {
       allPostsData,

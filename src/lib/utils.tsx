@@ -1,3 +1,5 @@
+import { Locale } from "@/types/common";
+
 export const copyToClipboard = (hex: string) => {
   navigator.clipboard
     .writeText(hex)
@@ -8,3 +10,7 @@ export const copyToClipboard = (hex: string) => {
       console.error("Failed to copy text: ", err);
     });
 };
+
+export function localeToFolderName(locale: Locale): string {
+  return locale.split("-")[0].toLowerCase();
+}

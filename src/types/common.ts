@@ -1,3 +1,4 @@
+import { GetStaticPropsContext } from "next";
 import { ReactNode } from "react";
 
 interface LayoutProps {
@@ -27,6 +28,9 @@ interface PostIdParams {
     category: string;
     id: string;
   };
+  query: {
+    locale: Locale;
+  };
 }
 
 interface PostFilteredArray {
@@ -43,6 +47,8 @@ interface PostSortedArray {
 }
 type Size = "sm" | "md" | "lg";
 
+type Locale = "en-US" | "ko-KR";
+
 type SideBarCategory =
   | "home"
   | "search"
@@ -54,8 +60,14 @@ type SideBarCategory =
   | "recommendation";
 type PostCategory = "all" | "react" | "nextjs" | "typescript" | "javascript";
 
+interface BlogContextProps extends GetStaticPropsContext {
+  locale: Locale;
+}
+
 export type {
+  BlogContextProps,
   LayoutProps,
+  Locale,
   PostArray,
   PostCategory,
   PostContentData,

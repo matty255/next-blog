@@ -1,4 +1,3 @@
-import { appWithTranslation } from "next-i18next";
 import { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -34,4 +33,4 @@ function App({ Component, pageProps }: AppProps) {
     </RecoilRoot>
   );
 }
-export default appWithTranslation(App);
+export default App;

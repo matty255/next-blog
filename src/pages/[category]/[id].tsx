@@ -7,9 +7,12 @@ import {
   getPostData,
   getSortedPostsData,
 } from "../../lib/MakePosts";
-import { PostContentData, PostData } from "../../types/common";
+import {
+  BlogContextProps,
+  PostContentData,
+  PostData,
+} from "../../types/common";
 
-import { GetStaticPropsContext } from "next";
 import Link from "next/link";
 import { withDataFetch } from "../../../hoc/withDataFetch";
 
@@ -90,38 +93,30 @@ function Post({
 export default withDataFetch(Post);
 
 export async function getStaticPaths() {
-  const koPaths = getAllPostIds("ko").map((path) => ({
+  // getAllPostIds 함수는 이제 locale 매개변수를 받지 않으므로 아래와 같이 수정
+  const allPaths = await getAllPostIds();
+  const paths = allPaths.map((path) => ({
     params: {
-      locale: "ko",
       category: path.params.category,
       id: path.params.id,
     },
+    locale: path.query.locale,
   }));
-  const enPaths = getAllPostIds("en").map((path) => ({
-    params: {
-      locale: "en",
-      category: path.params.category,
-      id: path.params.id,
-    },
-  }));
-  const paths = [...koPaths, ...enPaths];
   return {
     paths,
     fallback: false,
   };
 }
-
-export async function getStaticProps(context: GetStaticPropsContext) {
-  const { params } = context;
-  const locale = context.locale ?? "ko"; // 로케일 정보 가져오기
+export async function getStaticProps(context: BlogContextProps) {
+  const { params, locale } = context;
   const { category, id } = params as { category: string; id: string };
 
   console.log(params);
-  const postData = await getPostData(locale, category, id); // 순서 변경
-  const allPostsData = getSortedPostsData(locale);
-  const allPostsParams = getAllPostIds(locale); // "ko"를 locale로 변경
+  const postData = await getPostData(locale, category, id); // locale 정보를 context에서 가져옴
+  const allPostsData = await getSortedPostsData(locale); // await 키워드 추가
+  const allPostsParams = await getAllPostIds(); // await 키워드 추가, locale 매개변수 제거
 
-  const currentIndex = allPostsData.findIndex((post) => post.id === id); // params.id를 id로 변경
+  const currentIndex = allPostsData.findIndex((post) => post.id === id);
   const prevPost = allPostsData[currentIndex - 1] || null;
   const nextPost = allPostsData[currentIndex + 1] || null;
 
@@ -130,9 +125,11 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     prevPost?: typeof prevPost;
     nextPost?: typeof nextPost;
     allPostsData: typeof allPostsData;
+    allPostsParams: typeof allPostsParams; // 이 줄을 추가
   } = {
     postData,
     allPostsData,
+    allPostsParams, // 이 줄을 추가
   };
 
   if (prevPost) {
