@@ -6,9 +6,11 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { categoryList } from "../../../constants/category";
 import { withDataFetch } from "../../../hoc/withDataFetch"; // HOC import
 import {
   BlogContextProps,
+  CategoryLocale,
   PostData,
   PostFilteredArray,
 } from "../../types/common";
@@ -19,20 +21,31 @@ interface CategoryPageProps extends PostFilteredArray {
 
 const CategoryPage: React.FC<CategoryPageProps> = ({ posts, allPostsData }) => {
   const router = useRouter();
-  const { category } = router.query;
+  const { category } = router.query
   const [currentPosts, setPosts] = useState<PostData[]>(posts ?? []);
+
+  const locale = (router.locale === 'ko-KR' || router.locale === 'en-US') ? router.locale : 'ko-KR';  
+ 
+  const translateCategory = (category: string | undefined, locale: string) => {
+    // Ensure locale is one of the keys in CategoryMapping
+    const safeLocale: keyof CategoryLocale = (locale === 'ko-KR' || locale === 'en-US') ? locale : 'ko-KR';
+  
+    const translated = categoryList.find(cat => cat[safeLocale] === category || cat['ko-KR'] === category);
+    return translated ? translated[safeLocale] : category;
+  };
+
 
   return (
     <>
       <div className="prose dark:prose-invert pt-10">
         <h1>
-          POST in <span className="uppercase tracking-wider">{category}</span>
+          POST in <span className="uppercase tracking-wider">{translateCategory(category?.toString(), locale)}</span>
         </h1>
         <ul>
           {currentPosts.length &&
             currentPosts.map((post, index) => (
               <li key={index}>
-                <Link href={`${post.category}/${post.id}`}>{post.title}</Link>
+                <Link href={`${translateCategory(category?.toString(), locale)}/${post.id}`}>{post.title}</Link>
               </li>
             ))}
         </ul>

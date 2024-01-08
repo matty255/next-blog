@@ -41,6 +41,9 @@ interface PostArray {
   postData: PostData[];
 }
 
+type CategoryLocale = {
+  [key in Locale]: string;
+};
 interface PostSortedArray {
   allPostsData: PostData[];
   allCategories: string[];
@@ -48,6 +51,7 @@ interface PostSortedArray {
 type Size = "sm" | "md" | "lg";
 
 type Locale = "en-US" | "ko-KR";
+
 
 type SideBarCategory =
   | "home"
@@ -65,8 +69,7 @@ interface BlogContextProps extends GetStaticPropsContext {
 }
 
 export type {
-  BlogContextProps,
-  LayoutProps,
+  BlogContextProps, CategoryLocale, LayoutProps,
   Locale,
   PostArray,
   PostCategory,
@@ -76,5 +79,6 @@ export type {
   PostIdParams,
   PostSortedArray,
   SideBarCategory,
-  Size,
+  Size
 };
+
