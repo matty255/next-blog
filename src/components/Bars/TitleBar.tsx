@@ -10,7 +10,6 @@ import useMediaQuery from "../../hooks/useMediaquery";
 
 import useToggle from "../../hooks/useToggle";
 
-import LocaleSwitch from "../AddOns/LocaleSwitch";
 import ToggleSwitch from "../AddOns/ToggleSwitch";
 
 export default function TitleBar() {
@@ -29,7 +28,7 @@ export default function TitleBar() {
         )} */}
         {/* <DarkModeToggle /> */}
         <ToggleSwitch />
-        <LocaleSwitch />
+        {/* <LocaleSwitch /> */}
         <div
           onClick={!isShown ? toggle : () => {}}
           className="group r

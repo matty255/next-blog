@@ -14,7 +14,7 @@ const postsDirectory = path.join(process.cwd(), "posts");
 
 const md = new MarkdownIt();
 
-export async function getSortedPostsData(locale: Locale): Promise<PostData[]> {
+export async function getSortedPostsData(locale: string | undefined): Promise<PostData[]> {
   const folderName = localeToFolderName(locale);
   const localeDirectory = path.join(postsDirectory, folderName);
   let allPostsData: PostData[] = [];
@@ -105,7 +105,7 @@ export async function getPostData(
 }
 
 export async function getPostsByCategory(
-  locale: Locale,
+  locale: string | undefined,
   category: string
 ): Promise<PostData[]> {
   const allPosts = await getSortedPostsData(locale);

@@ -70,7 +70,7 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
 
         <section>
           <div className="h-24 flex">
-            Posts <AnimatedText text={"리액트네이티브"} />
+         <AnimatedText text={"블로그에 오신 것을 환영합니다."} />
           </div>
           <ul>
             {allPostsData.map(

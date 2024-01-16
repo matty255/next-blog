@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useLottie } from 'lottie-react';
-import toggleSwitchAnimation from '../../../assets/lottie/animation_lntqbth9.json';
-import { useRecoilState } from 'recoil';
 import { darkModeState } from '@/store/darkModeState';
+import { useLottie } from 'lottie-react';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import toggleSwitchAnimation from '../../../assets/lottie/animation_lntqbth9.json';
 
 const ToggleSwitch: React.FC = () => {
   const style = {
@@ -36,7 +36,7 @@ const ToggleSwitch: React.FC = () => {
   };
 
   return (
-    <div className="flex ml-2 items-center" onClick={handleToggle}>
+    <div className="flex ml-2 items-center cursor-pointer" onClick={handleToggle}>
       {View}
     </div>
   );

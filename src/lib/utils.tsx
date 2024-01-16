@@ -1,4 +1,3 @@
-import { Locale } from "@/types/common";
 
 export const copyToClipboard = (hex: string) => {
   navigator.clipboard
@@ -11,6 +10,6 @@ export const copyToClipboard = (hex: string) => {
     });
 };
 
-export function localeToFolderName(locale: Locale): string {
-  return locale.split("-")[0].toLowerCase();
+export function localeToFolderName(locale: string | undefined): string {
+  return locale ? locale.split("-")[0].toLowerCase() : ""
 }

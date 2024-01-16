@@ -3,6 +3,7 @@ import {
   getPostsByCategory,
   getSortedPostsData,
 } from "@/lib/MakePosts"; // getSortedPostsData 추가
+import { GetStaticPropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -11,22 +12,26 @@ import { withDataFetch } from "../../../hoc/withDataFetch"; // HOC import
 import {
   BlogContextProps,
   CategoryLocale,
+  Locale,
   PostData,
-  PostFilteredArray,
+  PostFilteredArray
 } from "../../types/common";
 
 interface CategoryPageProps extends PostFilteredArray {
   allPostsData: PostData[]; // 추가된 부분
+  locale: Locale; // 추가된 부분
 }
 
 const CategoryPage: React.FC<CategoryPageProps> = ({ posts, allPostsData }) => {
   const router = useRouter();
+  const { locale } = router;
   const { category } = router.query
   const [currentPosts, setPosts] = useState<PostData[]>(posts ?? []);
 
-  const locale = (router.locale === 'ko-KR' || router.locale === 'en-US') ? router.locale : 'ko-KR';  
- 
-  const translateCategory = (category: string | undefined, locale: string) => {
+  
+
+
+  const translateCategory = (category: string | undefined, locale: string | undefined) => {
     // Ensure locale is one of the keys in CategoryMapping
     const safeLocale: keyof CategoryLocale = (locale === 'ko-KR' || locale === 'en-US') ? locale : 'ko-KR';
   
@@ -34,6 +39,7 @@ const CategoryPage: React.FC<CategoryPageProps> = ({ posts, allPostsData }) => {
     return translated ? translated[safeLocale] : category;
   };
 
+console.log(posts, allPostsData)
 
   return (
     <>
@@ -71,13 +77,24 @@ export async function getStaticPaths(context: BlogContextProps) {
   const paths = [...koPaths, ...enPaths];
   return { paths, fallback: false };
 }
-export async function getStaticProps(context: BlogContextProps) {
-  const { params } = context;
-  const locale = context.locale ?? "ko-KR"; // 로케일 정보 가져오기
+
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const { locale, params } = context;
   const category = params?.category as string;
 
-  const posts = await getPostsByCategory(locale, category); // await 키워드 추가
-  const allPostsData = await getSortedPostsData(locale); // await 키워드 추가
+  // 현재 로케일과 카테고리에 맞는 게시글을 가져옴
+  const posts = await getPostsByCategory(locale, category);
+  // 추가: 모든 로케일에 대한 데이터를 불러옴
+  const allPostsData = {
+    'ko-KR': await getSortedPostsData('ko-KR'),
+    'en-US': await getSortedPostsData('en-US'),
+  };
 
-  return { props: { posts, allPostsData } }; // allPostsData 추가
+  return {
+    props: {
+      posts,
+      allPostsData, // 모든 로케일의 데이터를 props로 전달
+      locale
+    },
+  };
 }
