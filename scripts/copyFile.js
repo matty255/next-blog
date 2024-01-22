@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 const copyFile = () => {
-  const sourcePath = path.join(__dirname, '../posts/radio/I Want To Live.mp3');
-  const destPath = path.join(__dirname, '../public/song.mp3');
+  const sourcePath = path.join(__dirname, '../posts/radio/I_Want_To_Live.mp3');
+  const destPath = path.join(__dirname, '../public/I_Want_To_Live.mp3');
 
   try {
     fs.copyFileSync(sourcePath, destPath);
