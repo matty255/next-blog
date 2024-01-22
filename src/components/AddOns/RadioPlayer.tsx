@@ -10,7 +10,7 @@ const RadioPlayer: React.FC<RadioProps> = ({ radioFiles }) => {
     useEffect(() => {
       if (radioFiles.length > 0 && audioRef.current) {
         // 라디오 파일이 있고 오디오 요소가 준비되었을 때
-        audioRef.current.src = `/radio/${encodeURIComponent(radioFiles[0])}`;; // 수정된 경로
+        audioRef.current.src = `/${encodeURIComponent(radioFiles[1])}`; // public/radio/ 경로로 수정
         audioRef.current.load(); // 오디오를 로드합니다.
       }
     }, [radioFiles]);
