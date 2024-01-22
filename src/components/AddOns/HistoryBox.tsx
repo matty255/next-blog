@@ -19,6 +19,7 @@ const HistoryComponent = () => {
     if (savedHistory) {
       setHistoryStack(JSON.parse(savedHistory));
     }
+    console.log("historyStack", historyStack)
     setInitialRender(false);
   }, []);
 
