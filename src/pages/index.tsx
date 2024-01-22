@@ -9,12 +9,14 @@ import { getSortedPostsData } from "../lib/MakePosts";
 import { motion } from "framer-motion";
 import { profile } from "../constants/profile";
 
-import { BlogContextProps, PostData, PostSortedArray } from "@/types/common";
+import { BlogContextProps, PostData, PostSortedArray, RadioList } from "@/types/common";
 
+import RadioPlayer from "@/components/AddOns/RadioPlayer";
+import { getRadioData } from "@/lib/MakeRadios";
 import dynamic from "next/dynamic";
 import { withDataFetch } from "../../hoc/withDataFetch";
 
-function Home({ allPostsData, allCategories }: PostSortedArray) {
+function Home({ allPostsData, allCategories, radioFiles }: PostSortedArray & RadioList) {
   const { siteTitle, description, url, banner } = profile;
   const [viewCategory, setCategory] = useState("all");
   const [wordIndex, setWordIndex] = useState(0);
@@ -70,6 +72,8 @@ function Home({ allPostsData, allCategories }: PostSortedArray) {
 
         <section>
           <div className="h-24 flex">
+            <RadioPlayer radioFiles={radioFiles} />
+          radioFiles
          <AnimatedText text={"블로그에 오신 것을 환영합니다."} />
           </div>
           <ul>
@@ -118,10 +122,13 @@ export async function getStaticProps(context: BlogContextProps) {
     new Set(allPostsData.map((post) => post.category))
   );
 
+  const radioFiles = await getRadioData();
+
   return {
     props: {
       allPostsData,
       allCategories,
+      radioFiles
     },
   };
 }

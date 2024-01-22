@@ -48,6 +48,11 @@ interface PostSortedArray {
   allPostsData: PostData[];
   allCategories: string[];
 }
+
+
+interface RadioList {
+  radioFiles : string[];
+}
 type Size = "sm" | "md" | "lg";
 
 type Locale = "en-US" | "ko-KR";
@@ -77,8 +82,7 @@ export type {
   PostData,
   PostFilteredArray,
   PostIdParams,
-  PostSortedArray,
-  SideBarCategory,
+  PostSortedArray, RadioList, SideBarCategory,
   Size
 };
 
