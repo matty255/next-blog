@@ -14,7 +14,7 @@ import {
   CategoryLocale,
   Locale,
   PostData,
-  PostFilteredArray
+  PostFilteredArray,
 } from "../../types/common";
 
 interface CategoryPageProps extends PostFilteredArray {
@@ -25,33 +25,45 @@ interface CategoryPageProps extends PostFilteredArray {
 const CategoryPage: React.FC<CategoryPageProps> = ({ posts, allPostsData }) => {
   const router = useRouter();
   const { locale } = router;
-  const { category } = router.query
+  const { category } = router.query;
   const [currentPosts, setPosts] = useState<PostData[]>(posts ?? []);
 
-  
-
-
-  const translateCategory = (category: string | undefined, locale: string | undefined) => {
+  const translateCategory = (
+    category: string | undefined,
+    locale: string | undefined
+  ) => {
     // Ensure locale is one of the keys in CategoryMapping
-    const safeLocale: keyof CategoryLocale = (locale === 'ko-KR' || locale === 'en-US') ? locale : 'ko-KR';
-  
-    const translated = categoryList.find(cat => cat[safeLocale] === category || cat['ko-KR'] === category);
+    const safeLocale: keyof CategoryLocale =
+      locale === "ko-KR" || locale === "en-US" ? locale : "ko-KR";
+
+    const translated = categoryList.find(
+      (cat) => cat[safeLocale] === category || cat["ko-KR"] === category
+    );
     return translated ? translated[safeLocale] : category;
   };
 
-console.log(posts, allPostsData)
+  console.log(posts, allPostsData);
 
   return (
     <>
       <div className="prose dark:prose-invert pt-10">
         <h1>
-          POST in <span className="uppercase tracking-wider">{translateCategory(category?.toString(), locale)}</span>
+          POST in{" "}
+          <span className="uppercase tracking-wider">
+            {translateCategory(category?.toString(), locale)}
+          </span>
         </h1>
         <ul>
           {currentPosts.length &&
             currentPosts.map((post, index) => (
               <li key={index}>
-                <Link href={`${translateCategory(category?.toString(), locale)}/${post.id}`}>{post.title}</Link>
+                <Link
+                  href={`${translateCategory(category?.toString(), locale)}/${
+                    post.id
+                  }`}
+                >
+                  {post.title}
+                </Link>
               </li>
             ))}
         </ul>
@@ -86,15 +98,15 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const posts = await getPostsByCategory(locale, category);
   // 추가: 모든 로케일에 대한 데이터를 불러옴
   const allPostsData = {
-    'ko-KR': await getSortedPostsData('ko-KR'),
-    'en-US': await getSortedPostsData('en-US'),
+    "ko-KR": await getSortedPostsData("ko-KR"),
+    "en-US": await getSortedPostsData("en-US"),
   };
 
   return {
     props: {
       posts,
       allPostsData, // 모든 로케일의 데이터를 props로 전달
-      locale
+      locale,
     },
   };
 }

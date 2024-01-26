@@ -22,6 +22,7 @@ function Post({
   nextPost,
   allPostsData, // 추가된 부분
 }: PostContentData & { allPostsData: PostData[] }) {
+  console.log(postData, "postData");
   return (
     <>
       <Head>
@@ -44,7 +45,7 @@ function Post({
         <meta property="og:site_name" content={profile.siteTitle} />
       </Head>
       <motion.div
-        className="prose dark:prose-invert"
+        className="prose dark:prose-invert max-w-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -81,9 +82,8 @@ function Post({
             )}
           </div>
         </motion.div>
-        <p>{postData.description}</p>
-        <br />
-        <Date dateString={postData.date} />
+        <div dangerouslySetInnerHTML={{ __html: postData.description }}></div>
+        <br /> <Date dateString={postData.date} />
         <br />
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </motion.div>

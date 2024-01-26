@@ -9,19 +9,27 @@ import { getSortedPostsData } from "../lib/MakePosts";
 import { motion } from "framer-motion";
 import { profile } from "../constants/profile";
 
-import { BlogContextProps, PostData, PostSortedArray, RadioList } from "@/types/common";
+import {
+  BlogContextProps,
+  PostData,
+  PostSortedArray,
+  RadioList,
+} from "@/types/common";
 
-import RadioPlayer from "@/components/AddOns/RadioPlayer";
 import { getRadioData } from "@/lib/MakeRadios";
 import dynamic from "next/dynamic";
 import { withDataFetch } from "../../hoc/withDataFetch";
 
-function Home({ allPostsData, allCategories, radioFiles }: PostSortedArray & RadioList) {
+function Home({
+  allPostsData,
+  allCategories,
+  radioFiles,
+}: PostSortedArray & RadioList) {
   const { siteTitle, description, url, banner } = profile;
   const [viewCategory, setCategory] = useState("all");
   const [wordIndex, setWordIndex] = useState(0);
 
-  // console.log(allPostsData);
+  console.log(allPostsData, "fsd");
   const AnimatedText = dynamic(() => import("../common/AnimatedText"), {
     ssr: false,
   });
@@ -48,7 +56,10 @@ function Home({ allPostsData, allCategories, radioFiles }: PostSortedArray & Rad
         <meta property="og:site_name" content={siteTitle} />
       </Head>
 
-      <div className="prose dark:prose-invert ">
+      <div
+        className="prose
+dark:prose-invert max-w-none"
+      >
         <section>
           <h1 className="text-3xl font-bold underline"></h1>
         </section>
@@ -72,15 +83,15 @@ function Home({ allPostsData, allCategories, radioFiles }: PostSortedArray & Rad
 
         <section>
           <div className="h-24 flex">
-            <RadioPlayer radioFiles={radioFiles} />
-          radioFiles
-         <AnimatedText text={"블로그에 오신 것을 환영합니다."} />
+            {/* <RadioPlayer radioFiles={radioFiles} /> */}
+            radioFiles
+            <AnimatedText text={"블로그에 오신 것을 환영합니다."} />
           </div>
           <ul>
             {allPostsData.map(
               ({ id, category, date, title, image }: PostData) => (
                 <motion.article
-                  key={id}
+                  key={`${id}-${date}`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
@@ -128,7 +139,7 @@ export async function getStaticProps(context: BlogContextProps) {
     props: {
       allPostsData,
       allCategories,
-      radioFiles
+      radioFiles,
     },
   };
 }

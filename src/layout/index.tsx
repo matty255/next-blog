@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useEffect } from "react";
 
 import dynamic from "next/dynamic";
@@ -57,28 +56,23 @@ export default function Layout({
         darkMode ? "dark bg-slate-700" : "bg-slate-100"
       }`}
     >
-      <Head>
+      {/* <Head>
         <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      </Head> */}
+      {/* 
       <div>
         <SideBar allPostsData={allPostsData} />
-      </div>
+      </div> */}
 
       <div
-        className={`scrollbar-hide h-screen overflow-scroll transition-all duration-300 ${
-          sidebarState.isOpen ? "md:ml-80" : "md:ml-20"
-        } ${sidebarState.isOpen ? "md:w-sidebar-open" : "md:w-sidebar-closed"}`}
+        className={`scrollbar-hide h-screen overflow-scroll transition-all duration-300`}
       >
         <header>
           <TitleBar />
         </header>
         <main
-          className={`pt-10 min-h-screen bg-slate-100 dark:bg-slate-700 ${
-            sidebarState.isOpen ? "md:w-sidebar-open" : "md:w-sidebar-closed"
-          }  `}
+          className={`pt-10 min-h-screen bg-slate-100 dark:bg-slate-700   `}
         >
-          <AddressBar allPostsData={allPostsData} postData={postData} />
           <div className="p-10 pt-0">{children}</div>
         </main>
       </div>

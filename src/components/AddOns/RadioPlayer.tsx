@@ -1,36 +1,33 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface RadioProps {
   radioFiles: string[];
 }
 
 const RadioPlayer: React.FC<RadioProps> = ({ radioFiles }) => {
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-  
-    useEffect(() => {
-      if (radioFiles.length > 0 && audioRef.current) {
-        // 라디오 파일이 있고 오디오 요소가 준비되었을 때
-        audioRef.current.src = `/${encodeURIComponent(radioFiles[1])}`; // public/radio/ 경로로 수정
-        audioRef.current.load(); // 오디오를 로드합니다.
-      }
-    }, [radioFiles]);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isUserInteracted, setIsUserInteracted] = useState(false);
 
-  const playRadio = () => {
-    if (audioRef.current) {
-      audioRef.current.play(); // 오디오를 재생합니다.
+  useEffect(() => {
+    if (radioFiles.length > 0 && audioRef.current) {
+      audioRef.current.src = `/${encodeURIComponent(radioFiles[1])}`;
+      audioRef.current.load();
     }
+  }, [radioFiles]);
+
+  const handleUserInteraction = () => {
+    setIsUserInteracted(true);
   };
 
-  const pauseRadio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause(); // 오디오를 일시 정지합니다.
+  const handleMouseOver = () => {
+    if (isUserInteracted && audioRef.current) {
+      audioRef.current.play()
+        .catch(e => console.error('오디오 재생 오류:', e));
     }
   };
 
   return (
-    <div>
-      <button onClick={playRadio}>Play</button>
-      <button onClick={pauseRadio}>Pause</button>
+    <div onClick={handleUserInteraction} onMouseOver={handleMouseOver}>
       <audio ref={audioRef} controls />
     </div>
   );
